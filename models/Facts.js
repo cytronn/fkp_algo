@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var FactSchema = new mongoose.Schema({
   date: Number,
   name: String,
-  desciption : String
+  description : String
 });
 
 mongoose.model('Fact', FactSchema);
