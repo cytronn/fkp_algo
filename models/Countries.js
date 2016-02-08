@@ -3,3 +3,5 @@ var CountrySchema = new mongoose.Schema({
   name: String,
   rate: Number
 });
+
+mongoose.model('Country', CountrySchema);

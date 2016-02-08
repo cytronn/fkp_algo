@@ -3,3 +3,5 @@ var FactSchema = new mongoose.Schema({
   name: String,
   desciption : String
 });
+
+mongoose.model('Fact', FactSchema);
