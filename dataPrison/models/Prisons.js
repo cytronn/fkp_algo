@@ -9,12 +9,5 @@ var PrisonSchema = new mongoose.Schema({
   family_id: Number,
 });
 
-<<<<<<< Updated upstream
-
 
 mongoose.model('Prison', PrisonSchema);
-
-
-=======
-mongoose.model('Prison', PrisonSchema);
->>>>>>> Stashed changes
