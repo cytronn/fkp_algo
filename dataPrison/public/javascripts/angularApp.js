@@ -1,4 +1,4 @@
-var app = angular.module('flapperNews', []);
+var app = angular.module('dataPrison', []);
 
 app.controller('MainCtrl', [
 '$scope',
