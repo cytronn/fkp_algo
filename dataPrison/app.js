@@ -1,12 +1,21 @@
 var express = require('express');
+var router = express.Router();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoose = require('mongoose');
+require('./models/Countries');
+require('./models/DI');
+require('./models/Facts');
+require('./models/Prisons');
+require('./models/Resources');
+require('./models/Families');
+
 var routes = require('./routes/index');
-var users = require('./routes/users');
+
 
 var app = express();
 
