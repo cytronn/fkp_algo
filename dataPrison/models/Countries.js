@@ -6,4 +6,4 @@ var CountrySchema = new mongoose.Schema({
   rate: Number
 });
 
-mongoose.model('Country', CountrySchema);
+mongoose.model('CountrySchema', CountrySchema);
