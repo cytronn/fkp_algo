@@ -5,4 +5,4 @@ var FamilySchema = new mongoose.Schema({
   definition: String
 });
 
-mongoose.model('Family', TypesSchema);
+mongoose.model('Family', FamilySchema);

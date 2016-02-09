@@ -11,6 +11,6 @@ var PrisonSchema = new mongoose.Schema({
 
 
 
-mongoose.model('Prison', CommentSchema);
+mongoose.model('Prison', PrisonSchema);
 
 
