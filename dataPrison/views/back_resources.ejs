@@ -19,7 +19,7 @@
     </script>
     <script type="text/ng-template" id="/resources.html">
         <div ng-repeat="resource in resources.resources">
-          <span>{{resource.name}}</span>
+          <span ng-click="deleteResource(resource)">{{resource.name}}</span>
         </div>
     </script>
   </body>

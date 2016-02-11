@@ -41,6 +41,11 @@ app.controller('MainCtrl', [
         link: $scope.link,
       });
     };
+
+    $scope.deleteResource = function(resource) {
+      console.log(resource._id);
+      resources.delete(resource);
+    };
 }
 ]);
 
@@ -55,6 +60,12 @@ app.factory('resources', ['$http', function($http) {
       .success(function(data) {
         o.resources.push(data);
       });
+  };
+
+  o.delete = function(resource) {
+    return $http.delete('/resources/' + resource._id)
+      .success(
+        o.resources.splice(resource));
   };
 
   o.getAll = function() {
