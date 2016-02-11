@@ -10,7 +10,18 @@ app.config([
         url: '/back',
         templateUrl: '/back.html',
         controller: 'MainCtrl',
-        resolve: {}
+        resolve: {},
+      })
+      .state('resources', {
+        url: '/back-resources',
+        templateUrl: '/resources.html',
+        controller: 'MainCtrl',
+        resolve: {
+          postPromise : ['resources', function(resources) {
+            console.log('hello');
+            return resources.getAll();
+          }]
+        }
       });
 
     $urlRouterProvider.otherwise('back');
@@ -18,17 +29,20 @@ app.config([
 }]);
 
 app.controller('MainCtrl', [
-'$scope', 'resources',
-function($scope, resources){
-  $scope.test = 'Hello world!';
+  '$scope', 
+  'resources',
+  function($scope, resources){
+    $scope.test = 'Hello world!';
+    $scope.resources = resources;
 
-  $scope.addResource = function() {
-    resources.create({
-      name: $scope.name, 
-      link: $scope.link,
-    });
-  };
-}]);
+    $scope.addResource = function() {
+      resources.create({
+        name: $scope.name, 
+        link: $scope.link,
+      });
+    };
+}
+]);
 
 
 app.factory('resources', ['$http', function($http) {
@@ -42,5 +56,14 @@ app.factory('resources', ['$http', function($http) {
         o.resources.push(data);
       });
   };
+
+  o.getAll = function() {
+    return $http.get('/resources')
+      .success(function(data) {
+        angular.copy(data, o.resources);
+        console.log(o);
+      });
+  };
+
   return o;
 }]);
