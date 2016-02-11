@@ -63,9 +63,11 @@ app.factory('resources', ['$http', function($http) {
   };
 
   o.delete = function(resource) {
-    return $http.delete('/resources/' + resource._id)
-      .success(
-        o.resources.splice(resource));
+    var url = '/resources/' + resource._id;
+    return $http.delete(url)
+      .success(function(){
+        o.resources.splice(resource);
+      });
   };
 
   o.getAll = function() {
