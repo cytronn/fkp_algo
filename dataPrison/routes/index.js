@@ -10,7 +10,7 @@ var Country = mongoose.model('Country');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('back', console.log('hello world'));
+  res.render('back_resources', console.log('hello world'));
 });
 
 /* POST TO RESOURCES*/
