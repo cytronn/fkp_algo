@@ -13,6 +13,11 @@ router.get('/', function(req, res, next) {
   res.render('back_resources');
 });
 
+router.get('/back-resources-modify', function(req, res, next) {
+  res.render('back_resources');
+});
+
+
 /* POST TO RESOURCES*/
 
 router.get('/resources', function(req, res, next) {
@@ -52,6 +57,7 @@ router.get('/resources/:resource', function(req,res){
     res.json(req.resource);
 });
 
+
 router.delete('/resources/:resource', function(req,res){
     console.log(req.params.resource);
     Resource.remove({
@@ -62,5 +68,6 @@ router.delete('/resources/:resource', function(req,res){
             res.json({ message: 'Deleted' });
         });
 });
+
 
 module.exports = router;

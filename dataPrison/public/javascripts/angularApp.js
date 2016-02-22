@@ -18,9 +18,19 @@ app.config([
         controller: 'MainCtrl',
         resolve: {
           postPromise : ['resources', function(resources) {
-            console.log('hello');
             return resources.getAll();
           }]
+        }
+      })
+
+      .state('modify', {
+        url: '/back-resources-modify',
+        templateUrl: '/resource.html',
+        controller: 'MainCtrl',
+        resolve: {
+          // postPromise : ['resource', function(resource) {
+          //   return resource.json();
+          // }]
         }
       });
 
@@ -29,7 +39,7 @@ app.config([
 }]);
 
 app.controller('MainCtrl', [
-  '$scope', 
+  '$scope',
   'resources',
   function($scope, resources){
     $scope.test = 'Hello world!';
@@ -37,15 +47,19 @@ app.controller('MainCtrl', [
 
     $scope.addResource = function() {
       resources.create({
-        name: $scope.name, 
+        name: $scope.name,
         link: $scope.link,
       });
     };
 
     $scope.deleteResource = function(resource) {
-      console.log(resource._id);
       resources.delete(resource);
     };
+
+    $scope.modifyResource = function(resource) {
+      resources.modify(resource);
+    };
+
 }
 ]);
 
@@ -77,6 +91,10 @@ app.factory('resources', ['$http', function($http) {
         console.log(o);
       });
   };
+
+  o.modify = function(resource) {
+    return $http.get('/back-resources-modify');
+    };
 
   return o;
 }]);

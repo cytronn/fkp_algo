@@ -11,16 +11,25 @@
     <script type="text/ng-template" id="/back.html">
       <div>
         <form ng-submit="addResource()" style="margin-top:30px;">
-          <input type="text" placeholder="Name" ng-model="name"></input>
-          <input type="text" placeholder="Link" ng-model="link"></input>
+          <input type="text" placeholder={{resource.name}} ng-model="name"></input>
+          <input type="text" placeholder={{resource.link}} ng-model="link"></input>
           <input type="submit">
         </form>
       </div>
     </script>
     <script type="text/ng-template" id="/resources.html">
         <div ng-repeat="resource in resources.resources">
-          <span ng-click="deleteResource(resource)">{{resource.name}}</span>
+          <span>{{resource.name}}</span>
+          <button ng-click="deleteResource(resource)">Delete</button>
+          <button ng-click="modifyResource(resource)">modify</button>
         </div>
+    </script>
+
+    <script type="text/ng-template" id="/resource.html">
+            <span>Modify</span>
+            <input type="text" placeholder={{resource.name}} ng-model="name"></input>
+            <input type="text" placeholder={{resource.link}} ng-model="link"></input>
+            <input type="submit">
     </script>
   </body>
 </html>
