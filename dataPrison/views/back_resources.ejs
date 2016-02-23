@@ -27,9 +27,9 @@
 
     <script type="text/ng-template" id="/resource.html">
             <span>Modify</span>
-            <input type="text" placeholder="{{resource.name}}" ng-model="name"></input>
-            <input type="text" placeholder="{{resource.link}}" ng-model="link"></input>
-            <input type="submit">
+            <input class="resource-name" type="text" placeholder="{{resource.name}}" value="{{resource.name}}" ng-model="name"></input>
+            <input class="resource-link" type="text" placeholder="{{resource.link}}" value="{{resource.link}}" ng-model="link"></input>
+            <input type="submit" value ="hi" ng-click="updateResource(resource)">
     </script>
   </body>
 </html>

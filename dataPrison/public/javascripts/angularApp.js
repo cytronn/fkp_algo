@@ -56,18 +56,26 @@ app.controller('MainCtrl', [
     $scope.deleteResource = function(resource) {
       resources.delete(resource);
     };
-
-
-}
+  }
 ]);
 
 app.controller('resourceCtrl', [
   '$scope',
   'resource',
+  'resources',
   '$stateParams',
-  function($scope, resource, $stateParams){
+  function($scope, resource, resources, $stateParams){
     $scope.resource = resource;
-  }]);
+    $scope.updateResource = function(resource) {
+      console.log(document.querySelector('.resource-name').getAttribute('value'));
+      resources.update(resource, {
+        id: resource._id,
+        name: !$scope.name ? document.querySelector('.resource-name').getAttribute('value') : $scope.name,
+        link: !$scope.link ? document.querySelector('.resource-link').getAttribute('value') : $scope.link,
+      });
+    };
+  }
+]);
 
 
 app.factory('resources', ['$http', function($http) {
@@ -103,8 +111,16 @@ app.factory('resources', ['$http', function($http) {
       .success(function(data) {
         angular.copy(data, o.resources);
         console.log(o);
-      });
+      }); 
+    };
+
+  o.update = function(resource, data) {
+    console.log(data.id);
+    var url = '/resources/' + resource._id;
+    console.log(data);
+    return $http.put(url, data);
   };
 
   return o;
 }]);
+

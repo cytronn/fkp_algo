@@ -70,5 +70,21 @@ router.delete('/resources/:resource', function(req,res){
         });
 });
 
+router.put('/resources/:resource', function(req, res){
+  console.log(req.body.name);
+  Resource.update({ _id: req.body.id},{ 
+    $set: {
+      name: req.body.name,
+     link: req.body.link,
+    }
+  },
+  function (err) {
+    if (err) return res.send(err);
+    res.json({
+      message: 'Updated'
+    });
+  });
+});
+
 
 module.exports = router;
