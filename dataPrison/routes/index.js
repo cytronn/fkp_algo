@@ -54,6 +54,7 @@ router.param('resource', function(req, res, next, id) {
 
 
 router.get('/resources/:resource', function(req,res){
+    console.log(req.resource);
     res.json(req.resource);
 });
 

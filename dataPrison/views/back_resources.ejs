@@ -19,16 +19,16 @@
     </script>
     <script type="text/ng-template" id="/resources.html">
         <div ng-repeat="resource in resources.resources">
-          <span>{{resource.name}}</span>
+          <span>{{resource.name}} id : {{resource._id}}</span>
           <button ng-click="deleteResource(resource)">Delete</button>
-          <button ng-click="modifyResource(resource)">modify</button>
+          <a href="#/resources/{{resource._id}}"><button>modify</button></a>
         </div>
     </script>
 
     <script type="text/ng-template" id="/resource.html">
             <span>Modify</span>
-            <input type="text" placeholder={{resource.name}} ng-model="name"></input>
-            <input type="text" placeholder={{resource.link}} ng-model="link"></input>
+            <input type="text" placeholder="{{resource.name}}" ng-model="name"></input>
+            <input type="text" placeholder="{{resource.link}}" ng-model="link"></input>
             <input type="submit">
     </script>
   </body>

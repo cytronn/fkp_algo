@@ -23,15 +23,16 @@ app.config([
         }
       })
 
-      .state('modify', {
-        url: '/back-resources-modify',
-        templateUrl: '/resource.html',
-        controller: 'MainCtrl',
-        resolve: {
-          // postPromise : ['resource', function(resource) {
-          //   return resource.json();
-          // }]
-        }
+      .state('resourceModify', {
+                  url: '/resources/:id',
+                  templateUrl: '/resource.html',
+                  controller: 'resourceCtrl',
+                  resolve: {
+                  resource : ['$stateParams', 'resources', function ($stateParams, resources) {
+                      console.log(resources.get($stateParams.id));
+                      return resources.get($stateParams.id);
+              }]
+          }
       });
 
     $urlRouterProvider.otherwise('back');
@@ -56,12 +57,17 @@ app.controller('MainCtrl', [
       resources.delete(resource);
     };
 
-    $scope.modifyResource = function(resource) {
-      resources.modify(resource);
-    };
 
 }
 ]);
+
+app.controller('resourceCtrl', [
+  '$scope',
+  'resource',
+  '$stateParams',
+  function($scope, resource, $stateParams){
+    $scope.resource = resource;
+  }]);
 
 
 app.factory('resources', ['$http', function($http) {
@@ -84,6 +90,14 @@ app.factory('resources', ['$http', function($http) {
       });
   };
 
+  o.get = function (id) {
+    return $http.get('/resources/' + id)
+      .then(function (res) {
+        console.log(res.data);
+        return res.data;
+    });
+  };
+
   o.getAll = function() {
     return $http.get('/resources')
       .success(function(data) {
@@ -91,10 +105,6 @@ app.factory('resources', ['$http', function($http) {
         console.log(o);
       });
   };
-
-  o.modify = function(resource) {
-    return $http.get('/back-resources-modify');
-    };
 
   return o;
 }]);
