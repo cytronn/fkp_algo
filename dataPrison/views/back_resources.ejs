@@ -1,38 +1,58 @@
 <html>
-  <head>
-    <title>My Angular App!</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-    <script src="/javascripts/angularApp.js"></script>
-  </head>
-  <body ng-app="dataPrison" ng-controller="MainCtrl">
-    <ui-view></ui-view>
-    <script type="text/ng-template" id="/back.html">
-      <div>
-        <ul>
-          <a href="#/back/resources"><li>Ressources</li></a>
-          <a href="#/back/facts"><li>Facts</li></a>
-          <a href="#/back/countries"><li>Countries</li></a>
-          <a href="#/back/prisons"><li>Prisons</li></a>
-          <a href="#/back/families"><li>Families</li></a>
-          <a href="#/back/DI"><li>Directions interrégionales</li></a>
-        </ul>
-      </div>
-    </script>
-    <script type="text/ng-template" id="/resource-create.html">
-      <a href="#/back/resources"><button>Back</button></a>
-      <div>
-        <form ng-submit="addResource()" style="margin-top:30px;">
-          <input type="text" placeholder={{resource.name}} ng-model="name">Nom de la ressource</input>
-          <input type="text" placeholder={{resource.link}} ng-model="link">Lien</input>
-          <input type="submit">
-        </form>
-      </div>
-    </script>
-    <script type="text/ng-template" id="/fact-create.html">
-    <a href="#/back"><button>Back</button></a>
+
+<head>
+  <title>My Angular App!</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  <script src="/javascripts/angularApp.js"></script>
+</head>
+
+<body ng-app="dataPrison" ng-controller="MainCtrl">
+  <ui-view></ui-view>
+  <script type="text/ng-template" id="/back.html">
     <div>
-      <a href="#/back/"><button>Créer</button></a>
+      <ul>
+        <a href="#/back/resources">
+          <li>Ressources</li>
+        </a>
+        <a href="#/back/facts">
+          <li>Facts</li>
+        </a>
+        <a href="#/back/countries">
+          <li>Countries</li>
+        </a>
+        <a href="#/back/prisons">
+          <li>Prisons</li>
+        </a>
+        <a href="#/back/families">
+          <li>Families</li>
+        </a>
+        <a href="#/back/DI">
+          <li>Directions interrégionales</li>
+        </a>
+      </ul>
+    </div>
+  </script>
+  <script type="text/ng-template" id="/resource-create.html">
+    <a href="#/back/resources">
+      <button>Back</button>
+    </a>
+    <div>
+      <form ng-submit="addResource()" style="margin-top:30px;">
+        <input type="text" placeholder={{resource.name}} ng-model="name">Nom de la ressource</input>
+        <input type="text" placeholder={{resource.link}} ng-model="link">Lien</input>
+        <input type="submit">
+      </form>
+    </div>
+  </script>
+  <script type="text/ng-template" id="/fact-create.html">
+    <a href="#/back">
+      <button>Back</button>
+    </a>
+    <div>
+      <a href="#/back/">
+        <button>Créer</button>
+      </a>
     </div>
     <h3>Add fact</h3>
     <form ng-submit="addFact()" style="margin-top:20px;">
@@ -44,46 +64,61 @@
       <input type="text" ng-model="description"></input>
       <input type="submit">
     </form>
-    </script>
-    <script type="text/ng-template" id="/resources.html">
-        <a href="#/back"><button>Back</button></a>
-        <div>
-          <a href="#/back/create-resource"><button>Créer</button></a>
-        </div>
-        <div ng-repeat="resource in resources.resources">
-          <span>{{resource.name}} id : {{resource._id}}</span>
-          <button ng-click="deleteResource(resource)">Delete</button>
-          <a href="#/back/resources/{{resource._id}}"><button>modify</button></a>
-        </div>
-    </script>
-
-    <script type="text/ng-template" id="/facts.html">
-    <a href="#/back"><button>Back</button></a>
+  </script>
+  <script type="text/ng-template" id="/resources.html">
+    <a href="#/back">
+      <button>Back</button>
+    </a>
     <div>
-      <a href="#/back/fact-create"><button>Créer</button></a>
+      <a href="#/back/create-resource">
+        <button>Créer</button>
+      </a>
     </div>
-        <div ng-repeat="fact in facts.facts">
-          <span>{{fact.name}} id : {{fact._id}}</span>
-          <button ng-click="deleteFact(fact)">Delete</button>
-          <a href="#/facts/{{fact._id}}"><button>modify</button></a>
-        </div>
-    </script>
+    <div ng-repeat="resource in resources.resources">
+      <span>{{resource.name}} id : {{resource._id}}</span>
+      <button ng-click="deleteResource(resource)">Delete</button>
+      <a href="#/back/resources/{{resource._id}}">
+        <button>modify</button>
+      </a>
+    </div>
+  </script>
 
-    <script type="text/ng-template" id="/resource.html">
-          <a href="#/back/resources"><button>Back</button></a>
-          <h1>Modify</h1>
-            <input class="resource-name" type="text" placeholder="{{resource.name}}" value="{{resource.name}}" ng-model="name">Nom de la ressource</input>
-            <input class="resource-link" type="text" placeholder="{{resource.link}}" value="{{resource.link}}" ng-model="link">Lien de la ressource</input>
-            <input type="submit" value ="hi" ng-click="updateResource(resource)">
-    </script>
+  <script type="text/ng-template" id="/facts.html">
+    <a href="#/back">
+      <button>Back</button>
+    </a>
+    <div>
+      <a href="#/back/fact-create">
+        <button>Créer</button>
+      </a>
+    </div>
+    <div ng-repeat="fact in facts.facts">
+      <span>{{fact.name}} id : {{fact._id}}</span>
+      <button ng-click="deleteFact(fact)">Delete</button>
+      <a href="#/facts/{{fact._id}}">
+        <button>modify</button>
+      </a>
+    </div>
+  </script>
 
-    <script type="text/ng-template" id="/fact.html">
-            <span>Modify</span>
-            <input class="fact-name" type="text" placeholder="{{fact.name}}" value="{{fact.name}}" ng-model="name"></input>
-            <input class="fact-date" type="number" placeholder="{{fact.date}}" value="{{fact.date}}" ng-model="date"></input>
-            <input class="fact-description" type="text" placeholder="{{fact.description}}" value="{{fact.description}}" ng-model="description"></input>
-            <input type="submit" value ="hi" ng-click="updateFact(fact)">
-    </script>
+  <script type="text/ng-template" id="/resource.html">
+    <a href="#/back/resources">
+      <button>Back</button>
+    </a>
+    <h1>Modify</h1>
+    <input class="resource-name" type="text" placeholder="{{resource.name}}" value="{{resource.name}}" ng-model="name">Nom de la ressource</input>
+    <input class="resource-link" type="text" placeholder="{{resource.link}}" value="{{resource.link}}" ng-model="link">Lien de la ressource</input>
+    <input type="submit" value="hi" ng-click="updateResource(resource)">
+  </script>
 
-  </body>
+  <script type="text/ng-template" id="/fact.html">
+    <span>Modify</span>
+    <input class="fact-name" type="text" placeholder="{{fact.name}}" value="{{fact.name}}" ng-model="name"></input>
+    <input class="fact-date" type="number" placeholder="{{fact.date}}" value="{{fact.date}}" ng-model="date"></input>
+    <input class="fact-description" type="text" placeholder="{{fact.description}}" value="{{fact.description}}" ng-model="description"></input>
+    <input type="submit" value="hi" ng-click="updateFact(fact)">
+  </script>
+
+</body>
+
 </html>
