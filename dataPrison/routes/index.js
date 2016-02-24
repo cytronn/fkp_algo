@@ -13,11 +13,6 @@ router.get('/', function(req, res, next) {
   res.render('back_resources');
 });
 
-router.get('/back-resources-modify', function(req, res, next) {
-  res.render('back_resources');
-});
-
-
 /* POST TO RESOURCES*/
 
 router.get('/resources', function(req, res, next) {
@@ -25,6 +20,14 @@ router.get('/resources', function(req, res, next) {
     if(err){ return next(err); }
 
     res.json(resources);
+  });
+});
+
+router.get('/facts', function(req, res, next) {
+  Fact.find(function(err, facts){
+    if(err){ return next(err); }
+
+    res.json(facts);
   });
 });
 
@@ -38,6 +41,15 @@ router.post('/resources', function(req, res, next) {
   });
 });
 
+router.post('/facts', function(req, res, next) {
+  var fact = new Fact(req.body);
+
+  fact.save(function(err, fact){
+    if(err){ return next(err); }
+
+    res.json(fact);
+  });
+});
 
 
 router.param('resource', function(req, res, next, id) {
@@ -52,10 +64,27 @@ router.param('resource', function(req, res, next, id) {
   });
 });
 
+router.param('fact', function(req, res, next, id) {
+  var query = Fact.findById(id);
+
+  query.exec(function (err, fact){
+    if (err) { return next(err); }
+    if (!fact) { return next(new Error("can't find the resource")); }
+
+    req.fact = fact;
+    return next();
+  });
+});
+
 
 router.get('/resources/:resource', function(req,res){
     console.log(req.resource);
     res.json(req.resource);
+});
+
+router.get('/facts/:fact', function(req,res){
+    console.log(req.fact);
+    res.json(req.fact);
 });
 
 
@@ -70,12 +99,39 @@ router.delete('/resources/:resource', function(req,res){
         });
 });
 
+router.delete('/facts/:fact', function(req,res){
+    console.log(req.params.fact);
+    Fact.remove({
+      _id: req.params.fact
+    },
+    function (err, user) {
+            if (err) return res.send(err);
+            res.json({ message: 'Deleted' });
+        });
+});
+
 router.put('/resources/:resource', function(req, res){
   console.log(req.body.name);
-  Resource.update({ _id: req.body.id},{ 
+  Resource.update({ _id: req.body.id},{
     $set: {
       name: req.body.name,
      link: req.body.link,
+    }
+  },
+  function (err) {
+    if (err) return res.send(err);
+    res.json({
+      message: 'Updated'
+    });
+  });
+});
+
+router.put('/facts/:fact', function(req, res){
+  Fact.update({ _id: req.body.id},{
+    $set: {
+      name: req.body.name,
+      date: req.body.date,
+      description : req.body.description,
     }
   },
   function (err) {
