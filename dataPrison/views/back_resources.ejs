@@ -99,5 +99,53 @@
 
     <!-- END COUNTRIES -->
 
+    <!-- FACTS -->
+    <script type="text/ng-template" id="/fact-create.html">
+      <a href="#/back">
+        <button>Back</button>
+      </a>
+      <div>
+        <a href="#/back/">
+          <button>Créer</button>
+        </a>
+      </div>
+      <h3>Add fact</h3>
+      <form ng-submit="addFact()" style="margin-top:20px;">
+        <span>Date</span>
+        <input type="text" ng-model="date"></input>
+        <span>Name</span>
+        <input type="text" ng-model="name"></input>
+        <span>Description</span>
+        <input type="text" ng-model="description"></input>
+        <input type="submit">
+      </form>
+    </script>
+
+    <script type="text/ng-template" id="/facts.html">
+      <a href="#/back">
+        <button>Back</button>
+      </a>
+      <div>
+        <a href="#/back/fact-create">
+          <button>Créer</button>
+        </a>
+      </div>
+      <div ng-repeat="fact in facts.facts">
+        <span>{{fact.name}} id : {{fact._id}}</span>
+        <button ng-click="deleteFact(fact)">Delete</button>
+        <a href="#/facts/{{fact._id}}">
+          <button>modify</button>
+        </a>
+      </div>
+    </script>
+
+    <script type="text/ng-template" id="/fact.html">
+      <span>Modify</span>
+      <input class="fact-name" type="text" placeholder="{{fact.name}}" value="{{fact.name}}" ng-model="name"></input>
+      <input class="fact-date" type="number" placeholder="{{fact.date}}" value="{{fact.date}}" ng-model="date"></input>
+      <input class="fact-description" type="text" placeholder="{{fact.description}}" value="{{fact.description}}" ng-model="description"></input>
+      <input type="submit" value="hi" ng-click="updateFact(fact)">
+    </script>
+    <!-- END FACTS -->
   </body>
 </html>

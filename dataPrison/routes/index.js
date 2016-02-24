@@ -40,24 +40,9 @@ router.post('/resources', function(req, res, next) {
   });
 });
 
-
-router.param('resource', function(req, res, next, id) {
-  var query = Resource.findById(id);
-
-  query.exec(function (err, resource){
-    if (err) { return next(err); }
-    if (!resource) { return next(new Error("can't find the resource")); }
-
-    req.resource = resource;
-    return next();
-  });
-});
-
-
 router.get('/resources/:resource', function(req,res){
     res.json(req.resource);
 });
-
 
 router.delete('/resources/:resource', function(req,res){
     console.log(req.params.resource);
@@ -72,7 +57,7 @@ router.delete('/resources/:resource', function(req,res){
 
 router.put('/resources/:resource', function(req, res){
   console.log(req.body.name);
-  Resource.update({ _id: req.body.id},{ 
+  Resource.update({ _id: req.body.id},{
     $set: {
       name: req.body.name,
      link: req.body.link,
@@ -83,6 +68,18 @@ router.put('/resources/:resource', function(req, res){
     res.json({
       message: 'Updated'
     });
+  });
+});
+
+router.param('resource', function(req, res, next, id) {
+  var query = Resource.findById(id);
+
+  query.exec(function (err, resource){
+    if (err) { return next(err); }
+    if (!resource) { return next(new Error("can't find the resource")); }
+
+    req.resource = resource;
+    return next();
   });
 });
 
@@ -142,6 +139,60 @@ router.put('/countries/:country', function(req, res){
      code: req.body.code,
      name: req.body.name,
      rate: req.body.rate,
+}
+},
+function(err) {
+  if (err) return res.send(err);
+  res.json({
+    message: 'updated'
+  });
+});
+});
+
+
+
+/* FACTS */
+
+router.get('/facts', function(req, res, next) {
+  Fact.find(function(err, facts){
+    if(err){ return next(err); }
+
+    res.json(facts);
+  });
+});
+
+router.get('/facts/:fact', function(req,res){
+    console.log(req.fact);
+    res.json(req.fact);
+});
+
+router.post('/facts', function(req, res, next) {
+  var fact = new Fact(req.body);
+
+  fact.save(function(err, fact){
+    if(err){ return next(err); }
+
+    res.json(fact);
+  });
+});
+
+router.delete('/facts/:fact', function(req,res){
+    console.log(req.params.fact);
+    Fact.remove({
+      _id: req.params.fact
+    },
+    function (err, user) {
+            if (err) return res.send(err);
+            res.json({ message: 'Deleted' });
+        });
+});
+
+router.put('/facts/:fact', function(req, res){
+  Fact.update({ _id: req.body.id},{
+    $set: {
+      name: req.body.name,
+      date: req.body.date,
+      description : req.body.description,
     }
   },
   function (err) {
@@ -149,6 +200,18 @@ router.put('/countries/:country', function(req, res){
     res.json({
       message: 'Updated'
     });
+  });
+});
+
+router.param('fact', function(req, res, next, id) {
+  var query = Fact.findById(id);
+
+  query.exec(function (err, fact){
+    if (err) { return next(err); }
+    if (!fact) { return next(new Error("can't find the resource")); }
+
+    req.fact = fact;
+    return next();
   });
 });
 
