@@ -134,7 +134,7 @@ router.delete('/countries/:country', function(req,res){
 
 router.put('/countries/:country', function(req, res){
   console.log(req.body.name);
-  Country.update({ _id: req.body.id},{ 
+  Country.update({ _id: req.body.id},{
     $set: {
      code: req.body.code,
      name: req.body.name,
@@ -214,6 +214,70 @@ router.param('fact', function(req, res, next, id) {
     return next();
   });
 });
+
+/* Families */
+
+router.get('/families', function(req, res, next) {
+  Family.find(function(err, families){
+    if(err){ return next(err); }
+
+    res.json(families);
+  });
+});
+
+router.get('/families/:family', function(req,res){
+    console.log(req.family);
+    res.json(req.family);
+});
+
+router.post('/families', function(req, res, next) {
+  var family = new Family(req.body);
+
+  family.save(function(err, family){
+    if(err){ return next(err); }
+
+    res.json(family);
+  });
+});
+
+router.delete('/families/:family', function(req,res){
+    console.log(req.params.family);
+    Family.remove({
+      _id: req.params.family
+    },
+    function (err, user) {
+            if (err) return res.send(err);
+            res.json({ message: 'Deleted' });
+        });
+});
+
+router.put('/families/:family', function(req, res){
+  Family.update({ _id: req.body.id},{
+    $set: {
+      name: req.body.name,
+      definition: req.body.definition,
+    }
+  },
+  function (err) {
+    if (err) return res.send(err);
+    res.json({
+      message: 'Updated'
+    });
+  });
+});
+
+router.param('family', function(req, res, next, id) {
+  var query = Family.findById(id);
+
+  query.exec(function (err, family){
+    if (err) { return next(err); }
+    if (!family) { return next(new Error("can't find the resource")); }
+
+    req.family = family;
+    return next();
+  });
+});
+
 
 
 module.exports = router;

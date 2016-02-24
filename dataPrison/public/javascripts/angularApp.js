@@ -12,7 +12,7 @@ app.config([
         controller: 'MainCtrl',
         resolve: {},
       })
-
+      // RESOURCES
       .state('addResource', {
         url: '/back/create-resource',
         templateUrl: '/resource-create.html',
@@ -40,8 +40,10 @@ app.config([
                       console.log(resources.get($stateParams.id));
                       return resources.get($stateParams.id);
               }]
-          }
+          },
       })
+
+      // COUNTRIES
 
       .state('countries', {
         url: '/back/countries',
@@ -51,8 +53,8 @@ app.config([
           countryPromise: ['countries', function(countries) {
             return countries.getAll();
           }]
-        }
-      })     
+        },
+      })
 
       .state('addCountry', {
         url: '/back/create-country',
@@ -70,8 +72,10 @@ app.config([
                       console.log(countries.get($stateParams.id));
                       return countries.get($stateParams.id);
               }]
-          }
+          },
       })
+
+      // FACTS
 
       .state('facts',{
         url: '/back/facts',
@@ -100,6 +104,38 @@ app.config([
                       return facts.get($stateParams.id);
               }]
           },
+      })
+
+
+      // FAMILIES
+
+      .state('families',{
+        url: '/back/families',
+        templateUrl:'/families.html',
+        controller: 'MainCtrl',
+        resolve: {
+          postPromise : ['families', function(families) {
+            return families.getAll();
+          }]
+        },
+      })
+
+      .state('addFamily',{
+        url: '/back/family-create',
+        templateUrl:'/family-create.html',
+        controller : 'MainCtrl',
+        resolve:{},
+      })
+
+      .state('updateFamily', {
+                  url: '/families/:id',
+                  templateUrl: '/family.html',
+                  controller: 'familyCtrl',
+                  resolve: {
+                  family : ['$stateParams', 'families', function ($stateParams, families) {
+                      return families.get($stateParams.id);
+              }]
+          },
       });
 
     $urlRouterProvider.otherwise('back');
@@ -110,10 +146,14 @@ app.controller('MainCtrl', [
   '$scope',
   'resources',
   'facts',
-  function($scope, resources, facts){
+  'families',
+  function($scope, resources, facts, families){
     $scope.test = 'Hello world!';
     $scope.resources = resources;
     $scope.facts = facts;
+    $scope.families = families;
+
+    // RESOURCES
 
     $scope.addResource = function() {
       resources.create({
@@ -126,6 +166,8 @@ app.controller('MainCtrl', [
       resources.delete(resource);
     };
 
+    // FACTS
+
     $scope.deleteFact = function(fact) {
       facts.delete(fact);
     };
@@ -137,7 +179,22 @@ app.controller('MainCtrl', [
         description : $scope.description,
       });
     };
+
+    // FAMILIES
+
+    $scope.deleteFamily = function(family) {
+      families.delete(family);
+    };
+
+    $scope.addFamily = function() {
+      families.create({
+        name : $scope.name,
+        definition : $scope.definition,
+      });
+    };
+
   }
+
 ]);
 
 app.controller('resourceCtrl', [
@@ -212,6 +269,23 @@ app.controller('factCtrl', [
         name: !$scope.name ? document.querySelector('.fact-name').getAttribute('value') : $scope.name,
         date: !$scope.date ? document.querySelector('.fact-date').getAttribute('value') : $scope.date,
         description: !$scope.description ? document.querySelector('.fact-description').getAttribute('value') : $scope.description,
+      });
+    };
+  }
+]);
+
+app.controller('familyCtrl', [
+  '$scope',
+  'family',
+  'families',
+  '$stateParams',
+  function($scope, family, families, $stateParams){
+    $scope.family = family;
+    $scope.updateFact = function(family) {
+      families.update(family, {
+        id: family._id,
+        name: !$scope.name ? document.querySelector('.fact-name').getAttribute('value') : $scope.name,
+        definition: !$scope.definition ? document.querySelector('.family-description').getAttribute('value') : $scope.definition,
       });
     };
   }
@@ -351,7 +425,7 @@ app.factory('countries', ['$http', function($http) {
       .success(function(data) {
         angular.copy(data, o.countries);
         console.log(o);
-      }); 
+      });
     };
 
   o.update = function(country, data) {
@@ -362,6 +436,56 @@ app.factory('countries', ['$http', function($http) {
         location.reload();
       });
   };
+
+
+
+  return o;
+}]);
+
+app.factory('families', ['$http', function($http) {
+  var o = {
+    families: [],
+  };
+
+  o.create = function(family) {
+    return $http.post('/families', family)
+      .success(function(data) {
+        o.families.push(data);
+      });
+  };
+
+  o.delete = function(family) {
+    var url = '/families/' + family._id;
+    return $http.delete(url)
+      .success(function(){
+        o.families.splice(family);
+        location.reload();
+      });
+  };
+
+  o.get = function (id) {
+    return $http.get('/families/' + id)
+      .then(function (res) {
+        return res.data;
+    });
+  };
+
+  o.getAll = function() {
+    return $http.get('/families')
+      .success(function(data) {
+        angular.copy(data, o.families);
+      });
+    };
+
+  o.update = function(family, data) {
+    var url = '/families/' + family._id;
+    return $http.put(url, data)
+      .success(function(){
+        location.reload();
+      });
+  };
+
+
 
   return o;
 }]);
