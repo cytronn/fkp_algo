@@ -7,8 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-// mongoose.connect('mongodb://dataprisonsadmin:hbzx781vFLhvVr@51.254.98.52:27017/dataprisons');
-mongoose.connect('mongodb://localhost/prisons');
+mongoose.connect('mongodb://dataprisonsadmin:hbzx781vFLhvVr@51.254.98.52:27017/dataprisons');
 require('./models/Countries');
 require('./models/DI');
 require('./models/Facts');
