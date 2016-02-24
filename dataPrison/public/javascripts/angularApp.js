@@ -12,8 +12,15 @@ app.config([
         controller: 'MainCtrl',
         resolve: {},
       })
+      .state('addResource', {
+        url: '/back/create-resource',
+        templateUrl: '/resource-create.html',
+        controller: 'MainCtrl',
+        resolve: {},
+      })
+
       .state('resources', {
-        url: '/back-resources',
+        url: '/back/resources',
         templateUrl: '/resources.html',
         controller: 'MainCtrl',
         resolve: {
@@ -23,8 +30,8 @@ app.config([
         }
       })
 
-      .state('resourceModify', {
-                  url: '/resources/:id',
+      .state('updateResource', {
+                  url: '/back/resources/:id',
                   templateUrl: '/resource.html',
                   controller: 'resourceCtrl',
                   resolve: {
