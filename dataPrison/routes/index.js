@@ -18,7 +18,9 @@ router.get('/back-resources-modify', function(req, res, next) {
 });
 
 
-/* POST TO RESOURCES*/
+/*
+  RESOURCES
+*/
 
 router.get('/resources', function(req, res, next) {
   Resource.find(function(err, resources){
@@ -39,7 +41,6 @@ router.post('/resources', function(req, res, next) {
 });
 
 
-
 router.param('resource', function(req, res, next, id) {
   var query = Resource.findById(id);
 
@@ -54,7 +55,6 @@ router.param('resource', function(req, res, next, id) {
 
 
 router.get('/resources/:resource', function(req,res){
-    console.log(req.resource);
     res.json(req.resource);
 });
 
@@ -76,6 +76,72 @@ router.put('/resources/:resource', function(req, res){
     $set: {
       name: req.body.name,
      link: req.body.link,
+    }
+  },
+  function (err) {
+    if (err) return res.send(err);
+    res.json({
+      message: 'Updated'
+    });
+  });
+});
+
+/*
+COUNTRIES
+*/
+
+router.get('/countries', function(req, res, next) {
+  Country.find(function(err, countries){
+    if(err){ return next(err); }
+
+    res.json(countries);
+  });
+});
+
+router.post('/countries', function(req, res, next) {
+  var country = new Country(req.body);
+
+  country.save(function(err, country){
+    if(err){ return next(err); }
+
+    res.json(country);
+  });
+});
+
+router.param('country', function(req, res, next, id) {
+  var query = Country.findById(id);
+
+  query.exec(function (err, country){
+    if (err) { return next(err); }
+    if (!country) { return next(new Error("can't find the country")); }
+
+    req.country = country;
+    return next();
+  });
+});
+
+router.get('/countries/:country', function(req,res){
+    res.json(req.country);
+});
+
+
+router.delete('/countries/:country', function(req,res){
+    Country.remove({
+      _id: req.params.country
+    },
+    function (err, user) {
+            if (err) return res.send(err);
+            res.json({ message: 'Deleted' });
+        });
+});
+
+router.put('/countries/:country', function(req, res){
+  console.log(req.body.name);
+  Country.update({ _id: req.body.id},{ 
+    $set: {
+     code: req.body.code,
+     name: req.body.name,
+     rate: req.body.rate,
     }
   },
   function (err) {

@@ -7,6 +7,8 @@
   </head>
   <body ng-app="dataPrison" ng-controller="MainCtrl">
     <ui-view></ui-view>
+
+    <!-- BACK-OFFICE TEMPLATE -->
     <script type="text/ng-template" id="/back.html">
       <div>
         <ul>
@@ -19,16 +21,11 @@
         </ul>
       </div>
     </script>
-    <script type="text/ng-template" id="/resource-create.html">
-      <a href="#/back/resources"><button>Back</button></a>
-      <div>
-        <form ng-submit="addResource()" style="margin-top:30px;">
-          <input type="text" placeholder={{resource.name}} ng-model="name">Nom de la ressource</input>
-          <input type="text" placeholder={{resource.link}} ng-model="link">Lien</input>
-          <input type="submit">
-        </form>
-      </div>
-    </script>
+
+    <!-- END BACK OFFICE TEMPLATE -->
+
+    <!-- RESOURCES -->
+
     <script type="text/ng-template" id="/resources.html">
         <a href="#/back"><button>Back</button></a>
         <div>
@@ -41,6 +38,17 @@
         </div>
     </script>
 
+    <script type="text/ng-template" id="/resource-create.html">
+      <a href="#/back/resources"><button>Back</button></a>
+      <div>
+        <form ng-submit="addResource()" style="margin-top:30px;">
+          <input type="text" placeholder={{resource.name}} ng-model="name">Nom de la ressource</input>
+          <input type="text" placeholder={{resource.link}} ng-model="link">Lien</input>
+          <input type="submit">
+        </form>
+      </div>
+    </script>
+
     <script type="text/ng-template" id="/resource.html">
           <a href="#/back/resources"><button>Back</button></a>
           <h1>Modify</h1>
@@ -48,5 +56,48 @@
             <input class="resource-link" type="text" placeholder="{{resource.link}}" value="{{resource.link}}" ng-model="link">Lien de la ressource</input>
             <input type="submit" value ="hi" ng-click="updateResource(resource)">
     </script>
+
+    <!-- END RESOURCES -->
+
+    <!-- COUNTRIES -->
+
+    <script type="text/ng-template" id="/countries.html">
+        <a href="#/back"><button>Back</button></a>
+        <div>
+          <a href="#/back/create-country"><button>Créer</button></a>
+        </div>
+        <div ng-repeat="country in countries.countries">
+          <span>{{country.name}} id : {{country._id}}</span>
+          <button ng-click="deleteCountry(country)">Delete</button>
+          <a href="#/back/countries/{{country._id}}"><button>modify</button></a>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/country-create.html">
+      <a href="#/back/countries"><button>Back</button></a>
+      <div>
+        <form ng-submit="addCountry()" style="margin-top:30px;">
+          <input type="text" placeholder={{country.code}} ng-model="code">Country code</input>
+          <input type="text" placeholder={{country.name}} ng-model="name">name</input>
+          <input type="text" placeholder={{country.rate}} ng-model="rate">Taux d'emprisonnement</input>
+          <input type="submit">
+        </form>
+      </div>
+    </script>
+
+    <script type="text/ng-template" id="/country.html">
+      <a href="#/back/countries"><button>Back</button></a>
+      <h1>Modify</h1>
+      <input class="country-code" type="text" placeholder="{{country.code}}" value="{{country.code}}" ng-model="code">Code du pays</input>
+
+      <input class="country-name" type="text" placeholder="{{country.name}}" value="{{country.name}}" ng-model="name">Nom du pays</input>
+
+      <input class="country-rate" type="text" placeholder="{{country.rate}}" value="{{country.rate}}" ng-model="rate">Taux d'emprisonnement du pays</input>
+      
+      <input type="submit" value ="hi" ng-click="updateCountry(country)">
+    </script>
+
+    <!-- END COUNTRIES -->
+
   </body>
 </html>
