@@ -12,6 +12,7 @@ app.config([
         controller: 'MainCtrl',
         resolve: {},
       })
+
       .state('addResource', {
         url: '/back/create-resource',
         templateUrl: '/resource-create.html',
@@ -94,6 +95,7 @@ app.factory('resources', ['$http', function($http) {
     return $http.post('/resources', resource)
       .success(function(data) {
         o.resources.push(data);
+        location.reload();
       });
   };
 
@@ -102,6 +104,7 @@ app.factory('resources', ['$http', function($http) {
     return $http.delete(url)
       .success(function(){
         o.resources.splice(resource);
+        location.reload();
       });
   };
 
@@ -122,10 +125,11 @@ app.factory('resources', ['$http', function($http) {
     };
 
   o.update = function(resource, data) {
-    console.log(data.id);
     var url = '/resources/' + resource._id;
-    console.log(data);
-    return $http.put(url, data);
+    return $http.put(url, data)
+      .success(function(){
+        location.reload();
+      });
   };
 
   return o;
