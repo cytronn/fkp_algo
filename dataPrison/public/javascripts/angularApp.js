@@ -14,14 +14,21 @@ app.config([
       })
 
       .state('addFact',{
-        url: '/add-fact',
-        templateUrl:'/add-fact.html',
+        url: '/back/fact-create',
+        templateUrl:'/fact-create.html',
+        controller : 'MainCtrl',
+        resolve:{},
+      })
+
+      .state('addResource', {
+        url: '/back/create-resource',
+        templateUrl: '/resource-create.html',
         controller: 'MainCtrl',
         resolve: {},
       })
 
       .state('facts',{
-        url: '/back-facts',
+        url: '/back/facts',
         templateUrl:'/facts.html',
         controller: 'MainCtrl',
         resolve: {
@@ -32,7 +39,7 @@ app.config([
       })
 
       .state('resources', {
-        url: '/back-resources',
+        url: '/back/resources',
         templateUrl: '/resources.html',
         controller: 'MainCtrl',
         resolve: {
@@ -42,8 +49,8 @@ app.config([
         },
       })
 
-      .state('resourceModify', {
-                  url: '/resources/:id',
+      .state('updateResource', {
+                  url: '/back/resources/:id',
                   templateUrl: '/resource.html',
                   controller: 'resourceCtrl',
                   resolve: {
@@ -54,7 +61,7 @@ app.config([
           },
       })
 
-      .state('factModify', {
+      .state('updateFact', {
                   url: '/facts/:id',
                   templateUrl: '/fact.html',
                   controller: 'factCtrl',
@@ -196,6 +203,7 @@ app.factory('resources', ['$http', function($http) {
     return $http.post('/resources', resource)
       .success(function(data) {
         o.resources.push(data);
+        location.reload();
       });
   };
 
@@ -204,6 +212,7 @@ app.factory('resources', ['$http', function($http) {
     return $http.delete(url)
       .success(function(){
         o.resources.splice(resource);
+        location.reload();
       });
   };
 
@@ -224,10 +233,11 @@ app.factory('resources', ['$http', function($http) {
     };
 
   o.update = function(resource, data) {
-    console.log(data.id);
     var url = '/resources/' + resource._id;
-    console.log(data);
-    return $http.put(url, data);
+    return $http.put(url, data)
+      .success(function(){
+        location.reload();
+      });
   };
 
   return o;
