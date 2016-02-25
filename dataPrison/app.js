@@ -21,7 +21,7 @@ var routes = require('./routes/index');
 var app = express();
 
 // Change port
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 4000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
