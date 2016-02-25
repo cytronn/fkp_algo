@@ -20,12 +20,12 @@ var routes = require('./routes/index');
 
 var app = express();
 
-// Change port
-app.set('port', 3001);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// Change port
+app.set('port', 3001);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
