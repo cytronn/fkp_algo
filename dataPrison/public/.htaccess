@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Back-office"
+AuthUserFile "/var/www/datavizprisons.com/dataPrison/public/.htpasswd"
+Require valid-user
