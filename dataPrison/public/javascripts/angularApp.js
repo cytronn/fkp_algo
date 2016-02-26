@@ -20,138 +20,175 @@ app.config([
         resolve: {},
       })
 
-      .state('resources', {
-        url: '/back/resources',
-        templateUrl: '/resources.html',
-        controller: 'MainCtrl',
-        resolve: {
-          postPromise : ['resources', function(resources) {
-            return resources.getAll();
-          }]
-        },
-      })
+    .state('resources', {
+      url: '/back/resources',
+      templateUrl: '/resources.html',
+      controller: 'MainCtrl',
+      resolve: {
+        postPromise: ['resources', function(resources) {
+          return resources.getAll();
+        }]
+      },
+    })
 
-      .state('updateResource', {
-                  url: '/back/resources/:id',
-                  templateUrl: '/resource.html',
-                  controller: 'resourceCtrl',
-                  resolve: {
-                  resource : ['$stateParams', 'resources', function ($stateParams, resources) {
-                      console.log(resources.get($stateParams.id));
-                      return resources.get($stateParams.id);
-              }]
-          },
-      })
+    .state('updateResource', {
+      url: '/back/resources/:id',
+      templateUrl: '/resource.html',
+      controller: 'resourceCtrl',
+      resolve: {
+        resource: ['$stateParams', 'resources', function($stateParams, resources) {
+          console.log(resources.get($stateParams.id));
+          return resources.get($stateParams.id);
+        }]
+      },
+    })
 
-      // COUNTRIES
+    // COUNTRIES
 
-      .state('countries', {
-        url: '/back/countries',
-        templateUrl: '/countries.html',
-        controller: 'countriesCtrl',
-        resolve: {
-          countryPromise: ['countries', function(countries) {
-            return countries.getAll();
-          }]
-        },
-      })
+    .state('countries', {
+      url: '/back/countries',
+      templateUrl: '/countries.html',
+      controller: 'countriesCtrl',
+      resolve: {
+        countryPromise: ['countries', function(countries) {
+          return countries.getAll();
+        }]
+      },
+    })
 
-      .state('addCountry', {
-        url: '/back/create-country',
-        templateUrl: '/country-create.html',
-        controller: 'countriesCtrl',
-        resolve: {},
-      })
+    .state('addCountry', {
+      url: '/back/create-country',
+      templateUrl: '/country-create.html',
+      controller: 'countriesCtrl',
+      resolve: {},
+    })
 
-      .state('updateCountry', {
-                  url: '/back/countries/:id',
-                  templateUrl: '/country.html',
-                  controller: 'countryCtrl',
-                  resolve: {
-                  country : ['$stateParams', 'countries', function ($stateParams, countries) {
-                      console.log(countries.get($stateParams.id));
-                      return countries.get($stateParams.id);
-              }]
-          },
-      })
+    .state('updateCountry', {
+      url: '/back/countries/:id',
+      templateUrl: '/country.html',
+      controller: 'countryCtrl',
+      resolve: {
+        country: ['$stateParams', 'countries', function($stateParams, countries) {
+          console.log(countries.get($stateParams.id));
+          return countries.get($stateParams.id);
+        }]
+      },
+    })
 
-      // FACTS
+    // FACTS
 
-      .state('facts',{
-        url: '/back/facts',
-        templateUrl:'/facts.html',
-        controller: 'MainCtrl',
-        resolve: {
-          postPromise : ['facts', function(facts) {
-            return facts.getAll();
-          }]
-        },
-      })
+    .state('facts', {
+      url: '/back/facts',
+      templateUrl: '/facts.html',
+      controller: 'MainCtrl',
+      resolve: {
+        postPromise: ['facts', function(facts) {
+          return facts.getAll();
+        }]
+      },
+    })
 
-      .state('addFact',{
-        url: '/back/fact-create',
-        templateUrl:'/fact-create.html',
-        controller : 'MainCtrl',
-        resolve:{},
-      })
+    .state('addFact', {
+      url: '/back/fact-create',
+      templateUrl: '/fact-create.html',
+      controller: 'MainCtrl',
+      resolve: {},
+    })
 
-      .state('updateFact', {
-                  url: '/facts/:id',
-                  templateUrl: '/fact.html',
-                  controller: 'factCtrl',
-                  resolve: {
-                  fact : ['$stateParams', 'facts', function ($stateParams, facts) {
-                      return facts.get($stateParams.id);
-              }]
-          },
-      })
+    .state('updateFact', {
+      url: '/facts/:id',
+      templateUrl: '/fact.html',
+      controller: 'factCtrl',
+      resolve: {
+        fact: ['$stateParams', 'facts', function($stateParams, facts) {
+          return facts.get($stateParams.id);
+        }]
+      },
+    })
 
 
-      // FAMILIES
+    // FAMILIES
 
-      .state('families',{
-        url: '/back/families',
-        templateUrl:'/families.html',
-        controller: 'MainCtrl',
-        resolve: {
-          postPromise : ['families', function(families) {
-            return families.getAll();
-          }]
-        },
-      })
+    .state('families', {
+      url: '/back/families',
+      templateUrl: '/families.html',
+      controller: 'MainCtrl',
+      resolve: {
+        postPromise: ['families', function(families) {
+          return families.getAll();
+        }]
+      },
+    })
 
-      .state('addFamily',{
-        url: '/back/family-create',
-        templateUrl:'/family-create.html',
-        controller : 'MainCtrl',
-        resolve:{},
-      })
+    .state('addFamily', {
+      url: '/back/family-create',
+      templateUrl: '/family-create.html',
+      controller: 'MainCtrl',
+      resolve: {},
+    })
 
-      .state('updateFamily', {
-                  url: '/families/:id',
-                  templateUrl: '/family.html',
-                  controller: 'familyCtrl',
-                  resolve: {
-                  family : ['$stateParams', 'families', function ($stateParams, families) {
-                      return families.get($stateParams.id);
-              }]
-          },
-      });
+    .state('updateFamily', {
+      url: '/families/:id',
+      templateUrl: '/family.html',
+      controller: 'familyCtrl',
+      resolve: {
+        family: ['$stateParams', 'families', function($stateParams, families) {
+          return families.get($stateParams.id);
+        }]
+      },
+    })
+
+    // Directions
+
+    .state('dirs', {
+      url: '/back/dirs',
+      templateUrl: '/dirs.html',
+      controller: 'MainCtrl',
+      resolve: {
+        postPromise: ['dirs', function(dirs) {
+          return dirs.getAll();
+        }]
+      },
+    })
+
+    .state('addDir', {
+      url: '/back/dir-create',
+      templateUrl: '/dir-create.html',
+      controller: 'MainCtrl',
+      resolve: {},
+    })
+
+    .state('updateDir', {
+      url: '/dir/:id',
+      templateUrl: '/dir.html',
+      controller: 'dirCtrl',
+      resolve: {
+        dir: ['$stateParams', 'dirs', function($stateParams, dirs) {
+          return dirs.get($stateParams.id);
+        }]
+      },
+    });
 
     $urlRouterProvider.otherwise('back');
 
-}]);
+  }
+]);
 
 app.controller('MainCtrl', [
   '$scope',
   'resources',
   'facts',
   'families',
-  function($scope, resources, facts, families){
+  'dirs',
+  function($scope, resources, facts, families, dirs) {
     $scope.test = 'Hello world!';
     $scope.resources = resources;
     $scope.facts = facts;
     $scope.families = families;
+    $scope.dirs = dirs;
+    $scope.year = [];
+    $scope.population = [];
+
 
     // RESOURCES
 
@@ -174,9 +211,9 @@ app.controller('MainCtrl', [
 
     $scope.addFact = function() {
       facts.create({
-        date : $scope.date,
-        name : $scope.name,
-        description : $scope.description,
+        date: $scope.date,
+        name: $scope.name,
+        description: $scope.description,
       });
     };
 
@@ -188,9 +225,43 @@ app.controller('MainCtrl', [
 
     $scope.addFamily = function() {
       families.create({
-        name : $scope.name,
-        definition : $scope.definition,
+        name: $scope.name,
+        definition: $scope.definition,
       });
+    };
+
+    // dirs
+
+    $scope.addDir = function() {
+      dirs.create({
+        name: $scope.name,
+        coordinates: $scope.coordinates,
+        population_by_year: {
+          year: $scope.years,
+          population: $scope.population
+        },
+      });
+    };
+
+    $scope.deleteDir = function(dir) {
+      console.log('hello');
+      dirs.delete(dir);
+    };
+
+    $scope.addYear = function() {
+      // var years = [];
+      console.log(document.querySelectorAll('fieldset').length);
+      var button = document.querySelector('.submit');
+      var fieldToAdd = document.createElement('fieldset');
+      fieldToAdd.innerHTML = '<input type="number" ng-model="population"></input><input type="number" ng-model="year"></input>';
+      document.querySelector('form').insertBefore(fieldToAdd, button);
+      // for(var i = 0;  i < 10; i++){
+      // }
+    };
+
+    $scope.removeYear = function() {
+      var fields = document.querySelectorAll('fieldset');
+      fields[fields.length - 1].remove();
     };
 
   }
@@ -202,7 +273,7 @@ app.controller('resourceCtrl', [
   'resource',
   'resources',
   '$stateParams',
-  function($scope, resource, resources, $stateParams){
+  function($scope, resource, resources, $stateParams) {
     $scope.resource = resource;
     $scope.updateResource = function(resource) {
       console.log(document.querySelector('.resource-name').getAttribute('value'));
@@ -218,7 +289,7 @@ app.controller('resourceCtrl', [
 app.controller('countriesCtrl', [
   '$scope',
   'countries',
-  function($scope, countries){
+  function($scope, countries) {
     $scope.test = 'Hello world!';
     $scope.countries = countries;
 
@@ -241,7 +312,7 @@ app.controller('countryCtrl', [
   'country',
   'countries',
   '$stateParams',
-  function($scope, country, countries, $stateParams){
+  function($scope, country, countries, $stateParams) {
     $scope.country = country;
     $scope.updateCountry = function(country) {
       console.log($scope.name);
@@ -260,7 +331,7 @@ app.controller('factCtrl', [
   'fact',
   'facts',
   '$stateParams',
-  function($scope, fact, facts, $stateParams){
+  function($scope, fact, facts, $stateParams) {
     $scope.fact = fact;
     $scope.updateFact = function(fact) {
       console.log(document.querySelector('.fact-name').getAttribute('value'));
@@ -279,7 +350,7 @@ app.controller('familyCtrl', [
   'family',
   'families',
   '$stateParams',
-  function($scope, family, families, $stateParams){
+  function($scope, family, families, $stateParams) {
     $scope.family = family;
     $scope.updateFact = function(family) {
       families.update(family, {
@@ -287,6 +358,19 @@ app.controller('familyCtrl', [
         name: !$scope.name ? document.querySelector('.fact-name').getAttribute('value') : $scope.name,
         definition: !$scope.definition ? document.querySelector('.family-description').getAttribute('value') : $scope.definition,
       });
+    };
+  }
+]);
+
+app.controller('dirCtrl', [
+  '$scope',
+  'dir',
+  'dirs',
+  '$stateParams',
+  function($scope, dir, dirs, $stateParams) {
+    $scope.dir = dir;
+    $scope.updateDir = function(dir) {
+
     };
   }
 ]);
@@ -308,18 +392,18 @@ app.factory('facts', ['$http', function($http) {
   o.delete = function(fact) {
     var url = '/facts/' + fact._id;
     return $http.delete(url)
-      .success(function(){
+      .success(function() {
         o.facts.splice(fact);
         location.reload();
       });
   };
 
-  o.get = function (id) {
+  o.get = function(id) {
     return $http.get('/facts/' + id)
-      .then(function (res) {
+      .then(function(res) {
         console.log(res.data);
         return res.data;
-    });
+      });
   };
 
   o.getAll = function() {
@@ -328,13 +412,13 @@ app.factory('facts', ['$http', function($http) {
         angular.copy(data, o.facts);
         console.log(o);
       });
-    };
+  };
 
-  o.update = function(fact, data) {
+  o.update = function(fact, data)  {
     console.log(data.id);
     var url = '/facts/' + fact._id;
     return $http.put(url, data)
-      .success(function(){
+      .success(function() {
         location.reload();
       });
   };
@@ -358,18 +442,18 @@ app.factory('resources', ['$http', function($http) {
   o.delete = function(resource) {
     var url = '/resources/' + resource._id;
     return $http.delete(url)
-      .success(function(){
+      .success(function() {
         o.resources.splice(resource);
         location.reload();
       });
   };
 
-  o.get = function (id) {
+  o.get = function(id) {
     return $http.get('/resources/' + id)
-      .then(function (res) {
+      .then(function(res) {
         console.log(res.data);
         return res.data;
-    });
+      });
   };
 
   o.getAll = function() {
@@ -378,12 +462,12 @@ app.factory('resources', ['$http', function($http) {
         angular.copy(data, o.resources);
         console.log(o);
       });
-    };
+  };
 
-  o.update = function(resource, data) {
+  o.update = function(resource, data)  {
     var url = '/resources/' + resource._id;
     return $http.put(url, data)
-      .success(function(){
+      .success(function() {
         location.reload();
       });
   };
@@ -407,17 +491,17 @@ app.factory('countries', ['$http', function($http) {
   o.delete = function(country) {
     var url = '/countries/' + country._id;
     return $http.delete(url)
-      .success(function(){
+      .success(function() {
         o.countries.splice(country);
         location.reload();
       });
   };
 
-  o.get = function (id) {
+  o.get = function(id) {
     return $http.get('/countries/' + id)
-      .then(function (res) {
+      .then(function(res) {
         return res.data;
-    });
+      });
   };
 
   o.getAll = function() {
@@ -426,13 +510,13 @@ app.factory('countries', ['$http', function($http) {
         angular.copy(data, o.countries);
         console.log(o);
       });
-    };
+  };
 
-  o.update = function(country, data) {
+  o.update = function(country, data)  {
     console.log(country);
     var url = '/countries/' + country._id;
     return $http.put(url, data)
-      .success(function(){
+      .success(function() {
         location.reload();
       });
   };
@@ -457,17 +541,17 @@ app.factory('families', ['$http', function($http) {
   o.delete = function(family) {
     var url = '/families/' + family._id;
     return $http.delete(url)
-      .success(function(){
+      .success(function() {
         o.families.splice(family);
         location.reload();
       });
   };
 
-  o.get = function (id) {
+  o.get = function(id) {
     return $http.get('/families/' + id)
-      .then(function (res) {
+      .then(function(res) {
         return res.data;
-    });
+      });
   };
 
   o.getAll = function() {
@@ -475,17 +559,67 @@ app.factory('families', ['$http', function($http) {
       .success(function(data) {
         angular.copy(data, o.families);
       });
-    };
+  };
 
-  o.update = function(family, data) {
+  o.update = function(family, data)  {
     var url = '/families/' + family._id;
     return $http.put(url, data)
-      .success(function(){
+      .success(function() {
         location.reload();
       });
   };
 
 
+  return o;
+}]);
+
+app.factory('dirs', ['$http', function($http) {
+  var o = {
+    dirs: []
+  };
+
+  o.create = function(dir) {
+    return $http.post('/dirs', dir)
+      .success(function(data) {
+        o.dirs.push(data);
+        location.reload();
+      });
+  };
+
+  o.delete = function(dir) {
+    var url = '/dirs/' + dir._id;
+    console.log(url);
+    return $http.delete(url)
+      .success(function() {
+        console.log('this');
+        o.dirs.splice(dir);
+        location.reload();
+      });
+  };
+
+  o.get = function(id) {
+    return $http.get('/dirs/' + id)
+      .then(function(res) {
+        return res.data;
+      });
+  };
+
+  o.getAll = function() {
+    return $http.get('/dirs')
+      .success(function(data) {
+        angular.copy(data, o.dirs);
+        console.log(o);
+      });
+  };
+
+  o.update = function(dir, data) {
+    console.log(dir);
+    var url = '/dirs/' + dir._id;
+    return $http.put(url, data)
+      .success(function() {
+        location.reload();
+      });
+  };
 
   return o;
 }]);

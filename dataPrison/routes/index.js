@@ -278,6 +278,51 @@ router.param('family', function(req, res, next, id) {
   });
 });
 
+// Directions
+
+router.get('/dirs', function(req, res, next) {
+  DI.find(function(err, dirs){
+    if(err){ return next(err); }
+
+    res.json(dirs);
+  });
+});
+
+router.get('/dirs/:dir', function(req,res){
+    res.json(req.dir);
+});
+
+router.post('/dirs', function(req, res, next) {
+  var dir = new DI(req.body);
+  dir.save(function(err, dir){
+    if(err){ return next(err); }
+
+    res.json(dir);
+  });
+});
+
+router.delete('/dirs/:dir', function(req,res){
+    DI.remove({
+      _id: req.params.dir
+    },
+    function (err, user) {
+            if (err) return res.send(err);
+            res.json({ message: 'Deleted' });
+        });
+});
+
+router.param('dir', function(req, res, next, id) {
+  var query = DI.findById(id);
+
+  query.exec(function (err, dir){
+    if (err) { return next(err); }
+    if (!dir) { return next(new Error("can't find the DI")); }
+
+    req.dir = dir;
+    return next();
+  });
+});
+
 
 
 module.exports = router;
