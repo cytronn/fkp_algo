@@ -12,6 +12,7 @@ app.config([
         controller: 'MainCtrl',
         resolve: {},
       })
+
       // RESOURCES
       .state('addResource', {
         url: '/back/create-resource',
@@ -37,7 +38,6 @@ app.config([
       controller: 'resourceCtrl',
       resolve: {
         resource: ['$stateParams', 'resources', function($stateParams, resources) {
-          console.log(resources.get($stateParams.id));
           return resources.get($stateParams.id);
         }]
       },
@@ -186,8 +186,8 @@ app.controller('MainCtrl', [
     $scope.facts = facts;
     $scope.families = families;
     $scope.dirs = dirs;
-    $scope.year = [];
-    $scope.population = [];
+    $scope.years = [];
+    $scope.populations = [];
 
 
     // RESOURCES
@@ -233,12 +233,21 @@ app.controller('MainCtrl', [
     // dirs
 
     $scope.addDir = function() {
+      var years = document.querySelectorAll('fieldset .year');
+      var populations = document.querySelectorAll('fieldset .population');
+      console.log(populations);
+      for(var i = 0; i < years.length; i++){
+        $scope.years[i] = years[i].value;
+        $scope.populations[i] = populations[i].value;
+      }
+      console.log($scope.years);
+      console.log($scope.populations);
       dirs.create({
         name: $scope.name,
         coordinates: $scope.coordinates,
         population_by_year: {
           year: $scope.years,
-          population: $scope.population
+          population: $scope.populations
         },
       });
     };
@@ -250,10 +259,9 @@ app.controller('MainCtrl', [
 
     $scope.addYear = function() {
       // var years = [];
-      console.log(document.querySelectorAll('fieldset').length);
       var button = document.querySelector('.submit');
       var fieldToAdd = document.createElement('fieldset');
-      fieldToAdd.innerHTML = '<input type="number" ng-model="population"></input><input type="number" ng-model="year"></input>';
+      fieldToAdd.innerHTML = '<input type="number" class="population"></input><input type="number" class="year"></input>';
       document.querySelector('form').insertBefore(fieldToAdd, button);
       // for(var i = 0;  i < 10; i++){
       // }
@@ -582,13 +590,11 @@ app.factory('dirs', ['$http', function($http) {
     return $http.post('/dirs', dir)
       .success(function(data) {
         o.dirs.push(data);
-        location.reload();
       });
   };
 
   o.delete = function(dir) {
     var url = '/dirs/' + dir._id;
-    console.log(url);
     return $http.delete(url)
       .success(function() {
         console.log('this');
@@ -608,12 +614,10 @@ app.factory('dirs', ['$http', function($http) {
     return $http.get('/dirs')
       .success(function(data) {
         angular.copy(data, o.dirs);
-        console.log(o);
       });
   };
 
   o.update = function(dir, data) {
-    console.log(dir);
     var url = '/dirs/' + dir._id;
     return $http.put(url, data)
       .success(function() {

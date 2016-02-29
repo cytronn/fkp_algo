@@ -270,13 +270,13 @@
     <br>
     <span>Population by year</span>
     <fieldset>
-    <input type="number" ng-model="population[0]"></input>
-    <input type="number" ng-model="year[0]"></input>
+    <input type="number" class="population"></input>
+    <input type="number" class="year"></input>
     </fieldset>
     <input class="submit" type="submit">
   </form>
-          <button ng-click="addYear()">Add a year</button>
-          <button type="button" ng-click="removeYear()"> Remove a year</button>
+  <button ng-click="addYear()">Add a year</button>
+  <button type="button" ng-click="removeYear()"> Remove a year</button>
 </script>
 
 <script type="text/ng-template" id="/dirs.html">
@@ -299,20 +299,20 @@
 
 <script type="text/ng-template" id="/dir.html">
   <span>Modify</span>
+  <form action="">
   <input class="dir-name" type="text" placeholder="{{dir.name}}" value="{{dir.name}}" ng-model="name"></input>
   <input class="dir-coordinates" type="textarea" placeholder="{{dir.coordinates}}" value="{{dir.coordinates}}" ng-model="coordinates"></input>
 
-  <div ng-repeat="year in dir.population_by_year.year">
+  <div ng-repeat="year in dir.population_by_year">
     <fieldset>
-      <input class="dir-year" type="number" placeholder="{{year.year}}" value="{{year.year}}" ng-model="year"></input>
+      <input class="population" type="text" placeholder="{{dir.population_by_year.population[$index]}}" value="{{dir.population_by_year.population[$index]}}"></input>
+      <input class="year" type="number" placeholder="{{dir.population_by_year.year[$index]}}" value="{{dir.population_by_year.year[$index]}}"></input>
     </fieldset>
     </div>
-    <div ng-repeat="population in dir.population_by_year.population">
-    <fieldset>
-      <input class="dir-population" type="number" placeholder="{{year.population}}" value="{{year.population}}" ng-model="population"></input>
-    </fieldset>
-    </div>
-  <input type="submit" value="hi" ng-click="updatedir(dir)">
+  <input type="submit" class="submit" ng-click="updatedir(dir)">
+  </form>
+  <button ng-click="addYear()">Add a year</button>
+  <button type="button" ng-click="removeYear()"> Remove a year</button>
 </script>
 
 <!-- END DI  -->
