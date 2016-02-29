@@ -13,13 +13,13 @@ app.config([
         resolve: {},
       })
 
-      // RESOURCES
-      .state('addResource', {
-        url: '/back/create-resource',
-        templateUrl: '/resource-create.html',
-        controller: 'MainCtrl',
-        resolve: {},
-      })
+    // RESOURCES
+    .state('addResource', {
+      url: '/back/create-resource',
+      templateUrl: '/resource-create.html',
+      controller: 'MainCtrl',
+      resolve: {},
+    })
 
     .state('resources', {
       url: '/back/resources',
@@ -236,7 +236,7 @@ app.controller('MainCtrl', [
       var years = document.querySelectorAll('fieldset .year');
       var populations = document.querySelectorAll('fieldset .population');
       console.log(populations);
-      for(var i = 0; i < years.length; i++){
+      for (var i = 0; i < years.length; i++) {
         $scope.years[i] = years[i].value;
         $scope.populations[i] = populations[i].value;
       }
@@ -253,18 +253,14 @@ app.controller('MainCtrl', [
     };
 
     $scope.deleteDir = function(dir) {
-      console.log('hello');
       dirs.delete(dir);
     };
 
     $scope.addYear = function() {
-      // var years = [];
       var button = document.querySelector('.submit');
       var fieldToAdd = document.createElement('fieldset');
       fieldToAdd.innerHTML = '<input type="number" class="population"></input><input type="number" class="year"></input>';
       document.querySelector('form').insertBefore(fieldToAdd, button);
-      // for(var i = 0;  i < 10; i++){
-      // }
     };
 
     $scope.removeYear = function() {
@@ -360,7 +356,7 @@ app.controller('familyCtrl', [
   '$stateParams',
   function($scope, family, families, $stateParams) {
     $scope.family = family;
-    $scope.updateFact = function(family) {
+    $scope.updateFamily = function(family) {
       families.update(family, {
         id: family._id,
         name: !$scope.name ? document.querySelector('.fact-name').getAttribute('value') : $scope.name,
@@ -376,9 +372,27 @@ app.controller('dirCtrl', [
   'dirs',
   '$stateParams',
   function($scope, dir, dirs, $stateParams) {
+
     $scope.dir = dir;
     $scope.updateDir = function(dir) {
-
+      var years = document.querySelectorAll('fieldset .year');
+      var populations = document.querySelectorAll('fieldset .population');
+      console.log(populations);
+      for (var i = 0; i < years.length; i++) {
+        $scope.years[i] = years[i].value;
+        $scope.populations[i] = populations[i].value;
+      }
+      console.log($scope.years);
+      console.log($scope.populations);
+      dirs.update(dir, {
+        id: dir._id,
+        name: !$scope.name ? document.querySelector('.dir-name').getAttribute('value') : $scope.name,
+        coordinates: !$scope.coordinates ? document.querySelector('.dir-coordinates').getAttribute('value') : $scope.coordinates,
+        population_by_year: {
+          year: !$scope.years ? document.querySelector('.dir-year').getAttribute('value') : $scope.years,
+          population: !$scope.populations ? document.querySelector('.dir-population').getAttribute('value') : $scope.populations,
+        },
+      });
     };
   }
 ]);
@@ -576,7 +590,6 @@ app.factory('families', ['$http', function($http) {
         location.reload();
       });
   };
-
 
   return o;
 }]);

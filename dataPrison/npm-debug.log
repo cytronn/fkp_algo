@@ -1,14 +1,14 @@
 0 info it worked if it ends with ok
 1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
-2 info using npm@3.5.2
-3 info using node@v4.2.2
+2 info using npm@3.5.3
+3 info using node@v4.2.6
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle dataPrison@0.0.0~prestart: dataPrison@0.0.0
 6 silly lifecycle dataPrison@0.0.0~prestart: no script for prestart, continuing
 7 info lifecycle dataPrison@0.0.0~start: dataPrison@0.0.0
 8 verbose lifecycle dataPrison@0.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle dataPrison@0.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/machinecomplexe/Dropbox/Hetic/DEV/fkp_algo/dataPrison/node_modules/.bin:/Users/machinecomplexe/.rvm/gems/ruby-2.1.5/bin:/Users/machinecomplexe/.rvm/gems/ruby-2.1.5@global/bin:/Users/machinecomplexe/.rvm/rubies/ruby-2.1.5/bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/machinecomplexe/.rvm/bin
-10 verbose lifecycle dataPrison@0.0.0~start: CWD: /Users/machinecomplexe/Dropbox/Hetic/DEV/fkp_algo/dataPrison
+9 verbose lifecycle dataPrison@0.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/clairezunda/Documents/Sites/fkp_algo/dataPrison/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+10 verbose lifecycle dataPrison@0.0.0~start: CWD: /Users/clairezunda/Documents/Sites/fkp_algo/dataPrison
 11 silly lifecycle dataPrison@0.0.0~start: Args: [ '-c', 'node ./bin/www' ]
 12 silly lifecycle dataPrison@0.0.0~start: Returned: code: 1  signal: null
 13 info lifecycle dataPrison@0.0.0~start: Failed to exec start script
@@ -20,14 +20,14 @@
 14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:24:14)
 14 verbose stack     at emitTwo (events.js:87:13)
 14 verbose stack     at ChildProcess.emit (events.js:172:7)
-14 verbose stack     at maybeClose (internal/child_process.js:818:16)
+14 verbose stack     at maybeClose (internal/child_process.js:821:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
 15 verbose pkgid dataPrison@0.0.0
-16 verbose cwd /Users/machinecomplexe/Dropbox/Hetic/DEV/fkp_algo/dataPrison
-17 error Darwin 15.2.0
+16 verbose cwd /Users/clairezunda/Documents/Sites/fkp_algo/dataPrison
+17 error Darwin 15.3.0
 18 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "start"
-19 error node v4.2.2
-20 error npm  v3.5.2
+19 error node v4.2.6
+20 error npm  v3.5.3
 21 error code ELIFECYCLE
 22 error dataPrison@0.0.0 start: `node ./bin/www`
 22 error Exit status 1

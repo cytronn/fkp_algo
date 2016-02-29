@@ -13,10 +13,6 @@ router.get('/', function(req, res, next) {
   res.render('back_resources');
 });
 
-router.get('/back-resources-modify', function(req, res, next) {
-  res.render('back_resources');
-});
-
 
 /*
   RESOURCES
@@ -309,6 +305,26 @@ router.delete('/dirs/:dir', function(req,res){
             if (err) return res.send(err);
             res.json({ message: 'Deleted' });
         });
+});
+
+
+router.put('/dirs/:dir', function(req, res){
+  DI.update({ _id: req.body.id},{
+    $set: {
+      name: req.body.name,
+      coordinates: req.body.coordinates,
+      population_by_year: {
+        year: req.body.population_by_year.year,
+        population: req.body.population_by_year.population,
+      },
+}
+},
+function(err) {
+  if (err) return res.send(err);
+  res.json({
+    message: 'updated'
+  });
+});
 });
 
 router.param('dir', function(req, res, next, id) {
