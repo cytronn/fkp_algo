@@ -186,7 +186,12 @@ app.config([
       url: '/back/prison-create',
       templateUrl: '/prison-create.html',
       controller: 'MainCtrl',
-      resolve: {},
+      resolve: {
+        postPromise: ['dirs', function(dirs) {
+          console.log(dirs.getAll());
+          return dirs.getAll();
+        }]
+      },
     })
 
     .state('updatePrison', {
@@ -318,12 +323,12 @@ app.controller('MainCtrl', [
           y: $scope.y
         },
         interregional_direction: {
-           type: $scope.dir
+           type: 'dir'
         },
         population: $scope.population,
         density: $scope.density,
         family: {
-           type: $scope.family
+           type:'family'
         },
 
       });

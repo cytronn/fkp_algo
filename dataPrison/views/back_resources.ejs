@@ -337,7 +337,11 @@
     <br>
     <span>DI</span>
     <fieldset>
-    <input type="string" ng-model="dir"></input>
+    <select name="dir" form="dirform">
+      <div ng-repeat="dir in dirs.dirs">
+        <option value="{{dir._id}}">{{dir.name}}</option>
+      </div>
+    </select>
     </fieldset>
     <span>Population</span>
     <fieldset>
