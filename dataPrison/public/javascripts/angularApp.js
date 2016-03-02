@@ -187,9 +187,11 @@ app.config([
       templateUrl: '/prison-create.html',
       controller: 'MainCtrl',
       resolve: {
-        postPromise: ['dirs', function(dirs) {
-          console.log(dirs.getAll());
-          return dirs.getAll();
+        postPromise: ['dirs', 'families', function(dirs, families) {
+          var postProm = [];
+          postProm[0] = dirs.getAll();
+          postProm[1] = families.getAll();
+          return postProm;
         }]
       },
     })
