@@ -303,12 +303,12 @@
   <input class="dir-name" type="text" placeholder="{{dir.name}}" value="{{dir.name}}" ng-model="name"></input>
   <input class="dir-coordinates" type="textarea" placeholder="{{dir.coordinates}}" value="{{dir.coordinates}}" ng-model="coordinates"></input>
 
-  <div ng-repeat="year in dir.population_by_year">
-    <fieldset>
-      <input class="population" type="text" placeholder="{{dir.population_by_year.population[$index]}}" value="{{dir.population_by_year.population[$index]}}"></input>
-      <input class="year" type="number" placeholder="{{dir.population_by_year.year[$index]}}" value="{{dir.population_by_year.year[$index]}}"></input>
-    </fieldset>
-    </div>
+  <div ng-repeat="year in dir.population_by_year.year track by $index">
+      <fieldset>
+        <input class="population" type="text" placeholder="{{dir.population_by_year.population[$index]}}" value="{{dir.population_by_year.population[$index]}}"></input>
+        <input class="year" type="number" placeholder="{{dir.population_by_year.year[$index]}}" value="{{dir.population_by_year.year[$index]}}"></input>
+      </fieldset>
+      </div>
   <input type="submit" class="submit" ng-click="updateDir(dir)">
   </form>
   <button ng-click="addYear()">Add a year</button>

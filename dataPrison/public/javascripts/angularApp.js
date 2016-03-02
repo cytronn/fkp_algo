@@ -389,15 +389,20 @@ app.controller('dirCtrl', [
         $scope.years[i] = years[i].value;
         $scope.populations[i] = populations[i].value;
       }
-      console.log($scope.years);
-      console.log($scope.populations);
+
+      var sorted_years = $scope.years.slice(0).sort();
+      var sorted_pop = [];
+      for(var i = 0; i < $scope.populations.length; i++ ){
+        sorted_pop[i] = $scope.populations[$scope.years.indexOf(sorted_years[i])];
+      }
+
       dirs.update(dir, {
         id: dir._id,
         name: !$scope.name ? document.querySelector('.dir-name').getAttribute('value') : $scope.name,
         coordinates: !$scope.coordinates ? document.querySelector('.dir-coordinates').getAttribute('value') : $scope.coordinates,
         population_by_year: {
-          year: !$scope.years ? document.querySelector('.dir-year').getAttribute('value') : $scope.years,
-          population: !$scope.populations ? document.querySelector('.dir-population').getAttribute('value') : $scope.populations,
+          year: sorted_years,
+          population: sorted_pop,
         },
       });
     };
