@@ -240,14 +240,21 @@ app.controller('MainCtrl', [
         $scope.years[i] = years[i].value;
         $scope.populations[i] = populations[i].value;
       }
-      console.log($scope.years);
       console.log($scope.populations);
+      console.log($scope.years);
+      var sorted_years = $scope.years.slice(0).sort();
+      var sorted_pop = [];
+      for(var i = 0; i < $scope.populations.length; i++ ){
+        sorted_pop[i] = $scope.populations[$scope.years.indexOf(sorted_years[i])];
+      }
+      console.log(sorted_years);
+      console.log(sorted_pop);
       dirs.create({
         name: $scope.name,
         coordinates: $scope.coordinates,
         population_by_year: {
-          year: $scope.years,
-          population: $scope.populations
+          year: sorted_years,
+          population: sorted_pop
         },
       });
     };
