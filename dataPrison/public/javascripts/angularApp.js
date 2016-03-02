@@ -317,6 +317,7 @@ app.controller('MainCtrl', [
     // Prisons
 
     $scope.addPrison = function() {
+      console.log($scope.dir);
       prisons.create({
         name: $scope.name,
 
@@ -324,14 +325,10 @@ app.controller('MainCtrl', [
           x: $scope.x,
           y: $scope.y
         },
-        interregional_direction: {
-           type: 'dir'
-        },
+        interregional_direction: $scope.dir,
         population: $scope.population,
         density: $scope.density,
-        family: {
-           type:'family'
-        },
+        family: $scope.family
 
       });
     };
