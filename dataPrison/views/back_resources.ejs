@@ -316,6 +316,78 @@
 </script>
 
 <!-- END DI  -->
+
+<!--  Prisons-->
+<script type="text/ng-template" id="/prison-create.html">
+  <a href="#/back">
+    <button>Back</button>
+  </a>
+  <div>
+    <a href="#/back/">
+      <button>Créer</button>
+    </a>
+  </div>
+  <h3>Add Prison</h3>
+  <form ng-submit="addPrison()" style="margin-top:20px;">
+    <span>Name</span>
+    <input type="text" ng-model="name"></input>
+    <span>Coordinates</span>
+    <input type="number" ng-model="x"></input>
+    <input type="number" ng-model="y"></input>
+    <br>
+    <span>DI</span>
+    <fieldset>
+    <input type="string" ng-model="dir"></input>
+    </fieldset>
+    <span>Population</span>
+    <fieldset>
+    <input type="number" ng-model="population"></input>
+    </fieldset>
+    <span>Density</span>
+    <fieldset>
+    <input type="number" ng-model="density"></input>
+    </fieldset>
+    <span>Family</span>
+    <fieldset>
+    <input type="string" ng-model="family"></input>
+    </fieldset>
+    <input class="submit" type="submit">
+  </form>
+</script>
+
+<script type="text/ng-template" id="/prisons.html">
+  <a href="#/back">
+    <button>Back</button>
+  </a>
+  <div>
+    <a href="#/back/prison-create">
+      <button>Créer</button>
+    </a>
+  </div>
+  <div ng-repeat="prison in prisons.prisons">
+    <span>{{prison.name}} id : {{prison._id}}</span>
+    <button ng-click="deletePrison(prison)">Delete</button>
+    <a href="#/prison/{{prison._id}}">
+      <button>modify</button>
+    </a>
+  </div>
+</script>
+
+<script type="text/ng-template" id="/prison.html">
+  <span>Modify</span>
+  <form action="">
+    <input class="prison-name" type="text" placeholder="{{prison.name}}" value="{{prison.name}}" ng-model="name"></input>
+    <input class="prison-x" type="number" placeholder="{{prison.coordinates.x}}" value="{{prison.coordinates.x}}" ng-model="x"></input>
+    <input class="prison-y" type="number" placeholder="{{prison.coordinates.y}}" value="{{prison.coordinates.y}}" ng-model="y"></input>
+    <input class="prison-y" type="number" placeholder="{{prison.coordinates.y}}" value="{{prison.coordinates.y}}" ng-model="y"></input>
+    <input class="prison-dir" type="textarea" placeholder="{{prison.dir}}" value="{{prison.dir}}" ng-model="dir"></input>
+    <input class="prison-density" type="number" placeholder="{{prison.density}}" value="{{prison.density}}" ng-model="density"></input>
+    <input class="prison-density" type="number" placeholder="{{prison.density}}" value="{{prison.density}}" ng-model="density"></input>
+    <input class="prison-family" type="string" placeholder="{{prison.family}}" value="{{prison.family}}" ng-model="family"></input>
+    <input type="submit" class="submit" ng-click="updateDir(dir)">
+  </form>
+</script>
+<!-- End Prisons -->
 </body>
 
 </html>

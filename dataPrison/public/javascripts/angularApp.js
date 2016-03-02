@@ -167,6 +167,37 @@ app.config([
           return dirs.get($stateParams.id);
         }]
       },
+    })
+
+    // Prisons
+
+    .state('prisons', {
+      url: '/back/prisons',
+      templateUrl: '/prisons.html',
+      controller: 'MainCtrl',
+      resolve: {
+        postPromise: ['prisons', function(prisons) {
+          return prisons.getAll();
+        }]
+      },
+    })
+
+    .state('addPrison', {
+      url: '/back/prison-create',
+      templateUrl: '/prison-create.html',
+      controller: 'MainCtrl',
+      resolve: {},
+    })
+
+    .state('updatePrison', {
+      url: '/prison/:id',
+      templateUrl: '/prison.html',
+      controller: 'prisonCtrl',
+      resolve: {
+        prison: ['$stateParams', 'prisons', function($stateParams, prisons) {
+          return prisons.get($stateParams.id);
+        }]
+      },
     });
 
     $urlRouterProvider.otherwise('back');
@@ -180,7 +211,8 @@ app.controller('MainCtrl', [
   'facts',
   'families',
   'dirs',
-  function($scope, resources, facts, families, dirs) {
+  'prisons',
+  function($scope, resources, facts, families, dirs, prisons) {
     $scope.test = 'Hello world!';
     $scope.resources = resources;
     $scope.facts = facts;
@@ -188,7 +220,7 @@ app.controller('MainCtrl', [
     $scope.dirs = dirs;
     $scope.years = [];
     $scope.populations = [];
-
+    $scope.prisons = prisons;
 
     // RESOURCES
 
@@ -275,6 +307,31 @@ app.controller('MainCtrl', [
       fields[fields.length - 1].remove();
     };
 
+    // Prisons
+
+    $scope.addPrison = function() {
+      prisons.create({
+        name: $scope.name,
+
+        coordinates: {
+          x: $scope.x,
+          y: $scope.y
+        },
+        interregional_direction: {
+           type: $scope.dir
+        },
+        population: $scope.population,
+        density: $scope.density,
+        family: {
+           type: $scope.family
+        },
+
+      });
+    };
+
+    $scope.deletePrison = function(prison) {
+      prisons.delete(prison);
+    };
   }
 
 ]);
@@ -396,6 +453,28 @@ app.controller('dirCtrl', [
         sorted_pop[i] = $scope.populations[$scope.years.indexOf(sorted_years[i])];
       }
 
+      dirs.update(dir, {
+        id: dir._id,
+        name: !$scope.name ? document.querySelector('.dir-name').getAttribute('value') : $scope.name,
+        coordinates: !$scope.coordinates ? document.querySelector('.dir-coordinates').getAttribute('value') : $scope.coordinates,
+        population_by_year: {
+          year: sorted_years,
+          population: sorted_pop,
+        },
+      });
+    };
+  }
+]);
+
+app.controller('prisonCtrl', [
+  '$scope',
+  'prison',
+  'prisons',
+  '$stateParams',
+  function($scope, prison, prisons, $stateParams) {
+
+    $scope.prison = prison;
+    $scope.updatePrison = function(prison) {
       dirs.update(dir, {
         id: dir._id,
         name: !$scope.name ? document.querySelector('.dir-name').getAttribute('value') : $scope.name,
@@ -644,6 +723,53 @@ app.factory('dirs', ['$http', function($http) {
 
   o.update = function(dir, data) {
     var url = '/dirs/' + dir._id;
+    return $http.put(url, data)
+      .success(function() {
+        location.reload();
+      });
+  };
+
+  return o;
+}]);
+
+app.factory('prisons', ['$http', function($http) {
+  var o = {
+    prisons: []
+  };
+
+  o.create = function(prison) {
+    return $http.post('/prisons', prison)
+      .success(function(data) {
+        o.prisons.push(data);
+      });
+  };
+
+  o.delete = function(prison) {
+    var url = '/prisons/' + prison._id;
+    return $http.delete(url)
+      .success(function() {
+        console.log('this');
+        o.prisons.splice(prison);
+        location.reload();
+      });
+  };
+
+  o.get = function(id) {
+    return $http.get('/prisons/' + id)
+      .then(function(res) {
+        return res.data;
+      });
+  };
+
+  o.getAll = function() {
+    return $http.get('/prisons')
+      .success(function(data) {
+        angular.copy(data, o.prisons);
+      });
+  };
+
+  o.update = function(prison, data) {
+    var url = '/prisons/' + prisons._id;
     return $http.put(url, data)
       .success(function() {
         location.reload();
