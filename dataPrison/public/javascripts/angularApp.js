@@ -757,11 +757,18 @@ app.factory('prisons', ['$http', function($http) {
       })
       .success(function(data) {
         console.log(data.interregional_direction);
+        var toReturn = [];
         var dataDir = {
           id: data.interregional_direction,
           prison: data._id,
         };
-        return $http.put(/dirs/ + data.interregional_direction + /prisons/ , dataDir);
+        toReturn[0] = $http.put(/dirs/ + data.interregional_direction + /prisons/ , dataDir);
+        var dataFamily = {
+          id: data.family,
+          prison: data._id,
+        };
+        toReturn[1] = $http.put(/families/ + data.family + /prisons/ , dataFamily);
+        return toReturn;
       });
   };
 

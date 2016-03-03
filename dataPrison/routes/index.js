@@ -274,6 +274,18 @@ router.param('family', function(req, res, next, id) {
   });
 });
 
+router.put('/families/:family/prisons/', function(req, res){
+  console.log(req.body.id);
+  Family.findByIdAndUpdate(
+        req.body.id,
+        {$push: {'prisons': req.body.prison}},
+        {safe: true, upsert: true, new : true},
+        function(err, model) {
+            console.log(err);
+        }
+    );
+});
+
 // Directions
 
 router.get('/dirs', function(req, res, next) {
