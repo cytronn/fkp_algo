@@ -479,6 +479,11 @@ app.controller('prisonCtrl', [
   '$stateParams',
   function($scope, prison, prisons, $stateParams) {
     $scope.prison = prison;
+    console.log($scope.prison);
+    $scope.dir = prison.interregional_direction;
+    console.log($scope.dir);
+    $scope.family = prison.family;
+    console.log($scope.family);
     $scope.updatePrison = function(prison) {
       prisons.update(prison, {
         id: prison._id,
