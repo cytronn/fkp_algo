@@ -201,9 +201,15 @@ app.config([
       templateUrl: '/prison.html',
       controller: 'prisonCtrl',
       resolve: {
-        prison: ['$stateParams', 'prisons', function($stateParams, prisons) {
+        prison: function($stateParams, prisons){
           return prisons.get($stateParams.id);
-        }]
+        },
+        dirs: function(dirs){
+          return dirs.getAll();
+        },
+        families: function(families){
+          return families.getAll();
+        }
       },
     });
 
@@ -319,7 +325,6 @@ app.controller('MainCtrl', [
     $scope.addPrison = function() {
       prisons.create({
         name: $scope.name,
-
         coordinates: {
           x: $scope.x,
           y: $scope.y
@@ -330,7 +335,6 @@ app.controller('MainCtrl', [
         family: $scope.family
       });
     };
-
     $scope.deletePrison = function(prison) {
       prisons.delete(prison);
     };
@@ -474,17 +478,19 @@ app.controller('prisonCtrl', [
   'prisons',
   '$stateParams',
   function($scope, prison, prisons, $stateParams) {
-
     $scope.prison = prison;
     $scope.updatePrison = function(prison) {
-      dirs.update(dir, {
-        id: dir._id,
-        name: !$scope.name ? document.querySelector('.dir-name').getAttribute('value') : $scope.name,
-        coordinates: !$scope.coordinates ? document.querySelector('.dir-coordinates').getAttribute('value') : $scope.coordinates,
-        population_by_year: {
-          year: sorted_years,
-          population: sorted_pop,
+      prisons.update(prison, {
+        id: prison._id,
+        name: !$scope.name ? document.querySelector('.prison-name').getAttribute('value') : $scope.name,
+        coordinates: {
+          x:!$scope.x ? document.querySelector('.prison-x').getAttribute('value') : $scope.x,
+          y:!$scope.y ? document.querySelector('.prison-y').getAttribute('value') : $scope.y,
         },
+        population: !$scope.population ? document.querySelector('.prison-population').getAttribute('value') : $scope.population,
+        density: !$scope.density ? document.querySelector('.prison-density').getAttribute('value'): $scope.density,
+        interregional_direction: !$scope.dir ? document.querySelector('.prison-dir').getAttribute('value'): $scope.dir,
+        family: !$scope.family ? document.querySelector('.prison-family').getAttribute('value'): $scope.family,
       });
     };
   }
@@ -779,7 +785,7 @@ app.factory('prisons', ['$http', function($http) {
   };
 
   o.update = function(prison, data) {
-    var url = '/prisons/' + prisons._id;
+    var url = '/prisons/' + prison._id;
     return $http.put(url, data)
       .success(function() {
         location.reload();

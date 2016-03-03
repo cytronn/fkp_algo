@@ -399,16 +399,10 @@ router.put('/prisons/:prison', function(req, res){
     $set: {
       name: req.body.name,
       coordinates: {x: req.body.coordinates.x , y: req.body.coordinates.y},
-      interregional_direction: {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: 'DI'
-      },
+      interregional_direction: req.body.dir,
       population: req.body.population,
       density: req.body.density,
-      family: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'DI'
-      },
+      family: req.body.family,
 }
 },
 function(err) {
