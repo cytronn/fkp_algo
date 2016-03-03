@@ -349,7 +349,10 @@ router.get('/prisons', function(req, res, next) {
 });
 
 router.get('/prisons/:prison', function(req,res){
-    res.json(req.prison);
+    req.prison.populate('interregional_direction', function(err, post) {
+      if(err){ return next(err); }
+          res.json(req.prison);
+    });
 });
 
 router.post('/prisons', function(req, res, next) {
