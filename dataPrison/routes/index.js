@@ -285,7 +285,10 @@ router.get('/dirs', function(req, res, next) {
 });
 
 router.get('/dirs/:dir', function(req,res){
-    res.json(req.dir);
+  req.dir.populate('prisons', function(err, post) {
+      if(err){ return next(err); }
+          res.json(req.dir);
+    });
 });
 
 router.post('/dirs', function(req, res, next) {

@@ -220,7 +220,6 @@ app.controller('MainCtrl', [
   'dirs',
   'prisons',
   function($scope, resources, facts, families, dirs, prisons) {
-    $scope.test = 'Hello world!';
     $scope.resources = resources;
     $scope.facts = facts;
     $scope.families = families;
@@ -293,8 +292,9 @@ app.controller('MainCtrl', [
         coordinates: $scope.coordinates,
         population_by_year: {
           year: sorted_years,
-          population: sorted_pop
+          population: sorted_pop,
         },
+        prisons: [],
       });
     };
 
@@ -317,7 +317,6 @@ app.controller('MainCtrl', [
     // Prisons
 
     $scope.addPrison = function() {
-      console.log($scope.dir);
       prisons.create({
         name: $scope.name,
 
@@ -744,6 +743,12 @@ app.factory('prisons', ['$http', function($http) {
     return $http.post('/prisons', prison)
       .success(function(data) {
         o.prisons.push(data);
+      })
+      .success(function(data) {
+        return $http.put(/dirs/ + data.interregional_direction, {
+          id: data.interregional_direction,
+          prisons: data._id,
+        });
       });
   };
 
