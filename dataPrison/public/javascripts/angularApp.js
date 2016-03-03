@@ -745,10 +745,12 @@ app.factory('prisons', ['$http', function($http) {
         o.prisons.push(data);
       })
       .success(function(data) {
-        return $http.put(/dirs/ + data.interregional_direction, {
+        console.log(data.interregional_direction);
+        var dataDir = {
           id: data.interregional_direction,
-          prisons: data._id,
-        });
+          prison: data._id,
+        };
+        return $http.put(/dirs/ + data.interregional_direction + /prisons/ , dataDir);
       });
   };
 

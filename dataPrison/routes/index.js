@@ -342,6 +342,18 @@ router.param('dir', function(req, res, next, id) {
   });
 });
 
+router.put('/dirs/:dir/prisons/', function(req, res){
+  console.log(req.body.id);
+  DI.findByIdAndUpdate(
+        req.body.id,
+        {$push: {'prisons': req.body.prison}},
+        {safe: true, upsert: true, new : true},
+        function(err, model) {
+            console.log(err);
+        }
+    );
+});
+
 // Prisons
 
 router.get('/prisons', function(req, res, next) {
