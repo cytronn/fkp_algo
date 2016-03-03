@@ -329,7 +329,6 @@ app.controller('MainCtrl', [
         population: $scope.population,
         density: $scope.density,
         family: $scope.family
-
       });
     };
 

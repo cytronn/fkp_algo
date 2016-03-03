@@ -9,10 +9,10 @@ var PrisonSchema = new mongoose.Schema({
   },
   population: Number,
   density: Number,
-  // family: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Families'
-  // },
+  family: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Family'
+  },
 });
 
 
