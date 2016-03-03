@@ -383,14 +383,10 @@
     <input class="prison-name" type="text" placeholder="{{prison.name}}" value="{{prison.name}}" ng-model="name"></input>
     <input class="prison-x" type="number" placeholder="{{prison.coordinates.x}}" value="{{prison.coordinates.x}}" ng-model="x"></input>
     <input class="prison-y" type="number" placeholder="{{prison.coordinates.y}}" value="{{prison.coordinates.y}}" ng-model="y"></input>
-    <select class="prison-dir" name="dir" form="dirform" ng-model="dir">
-        <option ng-repeat="dir in dirs.dirs" value="{{dir._id}}">{{dir.name}}</option>
-    </select>
+    <select name="dir" ng-model="dir" ng-options="dir.name for dir in dirs.dirs"></select>
     <input class="prison-population" type="textarea" placeholder="{{prison.population}}" value="{{prison.population}}" ng-model="population"></input>
     <input class="prison-density" type="number" placeholder="{{prison.density}}" value="{{prison.density}}" ng-model="density"></input>
-    <select class="prison-family" name="family" form="familyform" ng-model="family">
-        <option ng-repeat="family in families.families" value="{{family._id}}">{{family.name}}</option>
-    </select>
+    <select name="family" ng-model="family" ng-options="family.name for family in families.families"></select>
     <input type="submit" class="submit" ng-click="updatePrison(prison)">
   </form>
 </script>
