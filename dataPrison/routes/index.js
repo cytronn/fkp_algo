@@ -366,6 +366,14 @@ router.put('/dirs/:dir/prisons/', function(req, res){
     );
 });
 
+router.delete('/dirs/:dir/prisons/', function(req, res) {
+  DI.findByIdAndUpdate(
+        req.body.id,
+        {$pull: {'prisons': req.body.prison}},
+        function(err, model) {
+        }
+    );
+});
 // Prisons
 
 router.get('/prisons', function(req, res, next) {
@@ -407,11 +415,12 @@ router.delete('/prisons/:prison', function(req,res){
 
 
 router.put('/prisons/:prison', function(req, res){
+  console.log(req.body.interregional_direction);
   Prison.update({ _id: req.body.id},{
     $set: {
       name: req.body.name,
       coordinates: {x: req.body.coordinates.x , y: req.body.coordinates.y},
-      interregional_direction: req.body.dir,
+      interregional_direction: req.body.interregional_direction,
       population: req.body.population,
       density: req.body.density,
       family: req.body.family,
