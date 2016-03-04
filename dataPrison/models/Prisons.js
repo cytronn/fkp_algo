@@ -15,8 +15,4 @@ var PrisonSchema = new mongoose.Schema({
   },
 });
 
-PrisonSchema.methods.inDir = function(interregional_direction, prison) {
-  
-};
-
 mongoose.model('Prison', PrisonSchema);

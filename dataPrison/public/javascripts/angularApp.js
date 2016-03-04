@@ -429,8 +429,8 @@ app.controller('familyCtrl', [
     $scope.updateFamily = function(family) {
       families.update(family, {
         id: family._id,
-        name: !$scope.name ? document.querySelector('.fact-name').getAttribute('value') : $scope.name,
-        definition: !$scope.definition ? document.querySelector('.family-description').getAttribute('value') : $scope.definition,
+        name: !$scope.name ? document.querySelector('.family-name').getAttribute('value') : $scope.name,
+        definition: !$scope.definition ? document.querySelector('.family-definition').getAttribute('value') : $scope.definition,
       });
     };
   }
@@ -479,11 +479,10 @@ app.controller('prisonCtrl', [
   '$stateParams',
   function($scope, prison, prisons, $stateParams) {
     $scope.prison = prison;
-    console.log($scope.prison);
     $scope.dir = prison.interregional_direction;
+    console.log(prison.interregional_direction);
     console.log($scope.dir);
     $scope.family = prison.family;
-    console.log($scope.family);
     $scope.updatePrison = function(prison) {
       prisons.update(prison, {
         id: prison._id,
@@ -494,8 +493,9 @@ app.controller('prisonCtrl', [
         },
         population: !$scope.population ? document.querySelector('.prison-population').getAttribute('value') : $scope.population,
         density: !$scope.density ? document.querySelector('.prison-density').getAttribute('value'): $scope.density,
-        interregional_direction: !$scope.dir ? document.querySelector('.prison-dir').getAttribute('value'): $scope.dir,
         family: !$scope.family ? document.querySelector('.prison-family').getAttribute('value'): $scope.family,
+        interregional_direction: !$scope.dir ? document.querySelector('.prison-dir').getAttribute('value'): $scope.dir
+
       });
     };
   }
