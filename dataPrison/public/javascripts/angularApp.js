@@ -776,7 +776,6 @@ app.factory('prisons', ['$http', function($http) {
     var url = '/prisons/' + prison._id;
     return $http.delete(url)
       .success(function() {
-        console.log('this');
         o.prisons.splice(prison);
         location.reload();
       });

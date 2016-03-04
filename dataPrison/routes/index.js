@@ -275,7 +275,6 @@ router.param('family', function(req, res, next, id) {
 });
 
 router.put('/families/:family/prisons/', function(req, res){
-  console.log(req.body.id);
   Family.findByIdAndUpdate(
         req.body.id,
         {$push: {'prisons': req.body.prison}},
@@ -355,7 +354,6 @@ router.param('dir', function(req, res, next, id) {
 });
 
 router.put('/dirs/:dir/prisons/', function(req, res){
-  console.log(req.body.id);
   DI.findByIdAndUpdate(
         req.body.id,
         {$push: {'prisons': req.body.prison}},
@@ -366,14 +364,6 @@ router.put('/dirs/:dir/prisons/', function(req, res){
     );
 });
 
-router.delete('/dirs/:dir/prisons/', function(req, res) {
-  DI.findByIdAndUpdate(
-        req.body.id,
-        {$pull: {'prisons': req.body.prison}},
-        function(err, model) {
-        }
-    );
-});
 // Prisons
 
 router.get('/prisons', function(req, res, next) {
