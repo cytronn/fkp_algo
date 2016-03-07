@@ -225,7 +225,8 @@ app.controller('MainCtrl', [
   'families',
   'dirs',
   'prisons',
-  function($scope, resources, facts, families, dirs, prisons) {
+  '$http',
+  function($scope, resources, facts, families, dirs, prisons, $http) {
     $scope.resources = resources;
     $scope.facts = facts;
     $scope.families = families;
@@ -323,16 +324,20 @@ app.controller('MainCtrl', [
     // Prisons
 
     $scope.addPrison = function() {
-      prisons.create({
-        name: $scope.name,
-        coordinates: {
-          x: $scope.x,
-          y: $scope.y
-        },
-        interregional_direction: $scope.dir,
-        population: $scope.population,
-        density: $scope.density,
-        family: $scope.family
+      return $http.get("https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.adress.replace(/\s+/g,"+")+"&key=AIzaSyCcQmrmCLvl8nFkOZWIwmj6SVrylAzvTm0")
+      .success(function(data) {
+        prisons.create({
+          name: $scope.name,
+          coordinates: {
+            x: data.results[0].geometry.location.lat,
+            y: data.results[0].geometry.location.lng
+          },
+          adress: $scope.adress,
+          interregional_direction: $scope.dir,
+          population: $scope.population,
+          density: $scope.density,
+          family: $scope.family
+        });
       });
     };
     $scope.deletePrison = function(prison) {
@@ -350,7 +355,6 @@ app.controller('resourceCtrl', [
   function($scope, resource, resources, $stateParams) {
     $scope.resource = resource;
     $scope.updateResource = function(resource) {
-      console.log(document.querySelector('.resource-name').getAttribute('value'));
       resources.update(resource, {
         id: resource._id,
         name: !$scope.name ? document.querySelector('.resource-name').getAttribute('value') : $scope.name,
@@ -487,10 +491,11 @@ app.controller('prisonCtrl', [
       prisons.update(prison, {
         id: prison._id,
         name: !$scope.name ? document.querySelector('.prison-name').getAttribute('value') : $scope.name,
-        coordinates: {
-          x:!$scope.x ? document.querySelector('.prison-x').getAttribute('value') : $scope.x,
-          y:!$scope.y ? document.querySelector('.prison-y').getAttribute('value') : $scope.y,
-        },
+        // coordinates: {
+        //   x:!$scope.x ? document.querySelector('.prison-x').getAttribute('value') : $scope.x,
+        //   y:!$scope.y ? document.querySelector('.prison-y').getAttribute('value') : $scope.y,
+        // },
+        adress: !$scope.adress ? document.querySelector('.prison-adress').getAttribute('value') : $scope.adress,
         population: !$scope.population ? document.querySelector('.prison-population').getAttribute('value') : $scope.population,
         density: !$scope.density ? document.querySelector('.prison-density').getAttribute('value'): $scope.density,
         family: !$scope.family ? document.querySelector('.prison-family').getAttribute('value'): $scope.family,
@@ -756,7 +761,6 @@ app.factory('prisons', ['$http', function($http) {
         o.prisons.push(data);
       })
       .success(function(data) {
-        console.log(data.interregional_direction);
         var toReturn = [];
         var dataDir = {
           id: data.interregional_direction,

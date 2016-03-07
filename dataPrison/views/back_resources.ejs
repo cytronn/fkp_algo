@@ -332,8 +332,7 @@
     <span>Name</span>
     <input type="text" ng-model="name"></input>
     <span>Coordinates</span>
-    <input type="number" ng-model="x"></input>
-    <input type="number" ng-model="y"></input>
+    <input type="string" ng-model="adress"></input>
     <br>
     <span>DI</span>
     <fieldset>
@@ -377,8 +376,7 @@
   <span>Modify</span>
   <form action="">
     <input class="prison-name" type="text" placeholder="{{prison.name}}" value="{{prison.name}}" ng-model="name"></input>
-    <input class="prison-x" type="number" placeholder="{{prison.coordinates.x}}" value="{{prison.coordinates.x}}" ng-model="x"></input>
-    <input class="prison-y" type="number" placeholder="{{prison.coordinates.y}}" value="{{prison.coordinates.y}}" ng-model="y"></input>
+    <input class="prison-adress" type="text" placeholder="{{prison.adress}}" value="{{prison.adress}}" ng-model="adress"></input>
     <select class="prison-dir" name="dir" ng-model="dir" ng-options="dir.name for dir in dirs.dirs track by dir._id" value="{{prison.dir}}"></select>
     <input class="prison-population" type="textarea" placeholder="{{prison.population}}" value="{{prison.population}}" ng-model="population"></input>
     <input class="prison-density" type="number" placeholder="{{prison.density}}" value="{{prison.density}}" ng-model="density"></input>
