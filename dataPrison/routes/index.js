@@ -222,8 +222,10 @@ router.get('/families', function(req, res, next) {
 });
 
 router.get('/families/:family', function(req,res){
-    console.log(req.family);
-    res.json(req.family);
+  req.family.populate('prisons', function(err, post) {
+      if(err){ return next(err); }
+          res.json(req.family);
+    });
 });
 
 router.post('/families', function(req, res, next) {
