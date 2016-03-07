@@ -221,8 +221,9 @@ router.get('/families', function(req, res, next) {
   });
 });
 
+
 router.get('/families/:family', function(req,res){
-  req.family.populate('prisons', function(err, post) {
+  req.family.populate('prisons', function(err, family) {
       if(err){ return next(err); }
           res.json(req.family);
     });
@@ -322,7 +323,6 @@ router.delete('/dirs/:dir', function(req,res){
             res.json({ message: 'Deleted' });
         });
 });
-
 
 router.put('/dirs/:dir', function(req, res){
   DI.update({ _id: req.body.id},{
