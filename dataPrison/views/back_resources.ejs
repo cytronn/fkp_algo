@@ -337,9 +337,7 @@
     <br>
     <span>DI</span>
     <fieldset>
-    <select name="dir" form="dirform" ng-model="dir">
-        <option ng-repeat="dir in dirs.dirs" value="{{dir._id}}">{{dir.name}}</option>
-    </select>
+    <select name="dir" ng-model="dir" ng-options="dir.name for dir in dirs.dirs track by dir._id" value="{{dir._id}}"></select>
     </fieldset>
     <span>Population</span>
     <fieldset>
@@ -351,9 +349,7 @@
     </fieldset>
     <span>Family</span>
     <fieldset>
-    <select name="family" form="familyform" ng-model="family">
-        <option ng-repeat="family in families.families" value="{{family._id}}">{{family.name}}</option>
-    </select>
+    <select name="family" ng-model="family" ng-options="family.name for family in families.families track by family._id" value="{{family._id}}"></select>
     </fieldset>
     <input class="submit" type="submit">
   </form>
