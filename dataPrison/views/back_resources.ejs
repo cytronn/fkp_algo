@@ -2,6 +2,7 @@
 
 <head>
   <title>My Angular App!</title>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
   <script src="/javascripts/angularApp.js"></script>
@@ -29,7 +30,7 @@
         <a href="#/back/families">
           <li>Families</li>
         </a>
-        <a href="#/back/DI">
+        <a href="#/back/dirs">
           <li>Directions interrégionales</li>
         </a>
       </ul>
@@ -41,44 +42,62 @@
   <!-- RESOURCES -->
 
   <script type="text/ng-template" id="/resources.html">
-    <a href="#/back">
-      <button>Back</button>
-    </a>
-    <div>
+    <div class="col-md-6 col-md-offset-3" style="margin-top:30px;margin-bottom: 20px;">
+      <a href="#/back">
+        <button class="btn btn-primary">
+          < Back</button>
+      </a>
       <a href="#/back/create-resource">
-        <button>Créer</button>
+        <button class="btn btn-primary">Créer</button>
       </a>
     </div>
-    <div ng-repeat="resource in resources.resources">
-      <span>{{resource.name}} id : {{resource._id}}</span>
-      <button ng-click="deleteResource(resource)">Delete</button>
-      <a href="#/back/resources/{{resource._id}}">
-        <button>modify</button>
-      </a>
+    <div ng-repeat="resource in resources.resources" style='font-size:15px; margin-top:30px;'>
+      <span style="margin-top:5px;" class="col-md-3 col-md-offset-3">{{resource.name}} id : {{resource._id}}</span>
+      <div style="margin-top:5px;" class="col-md-3 col-md-offset-1">
+        <button ng-click="deleteResource(resource)" class="btn btn-danger" style="font-size:10px;">Delete</button>
+        <a href="#/back/resources/{{resource._id}}">
+          <button class="btn btn-primary" style="font-size:10px;">Modify</button>
+        </a>
+      </div>
     </div>
   </script>
 
   <script type="text/ng-template" id="/resource-create.html">
-    <a href="#/back/resources">
-      <button>Back</button>
-    </a>
-    <div>
-      <form ng-submit="addResource()" style="margin-top:30px;">
-        <input type="text" placeholder={{resource.name}} ng-model="name">Nom de la ressource</input>
-        <input type="text" placeholder={{resource.link}} ng-model="link">Lien</input>
-        <input type="submit">
-      </form>
-    </div>
+      <a href="#/back/resources">
+        <button class="btn btn-primary">
+          < Back</button>
+      </a>
+        <form ng-submit="addResource()" style="margin-top:30px;" class='form-horizontal'>
+          <div class="form-group">
+            <label for='name' class='control-label' class="col-md-3 col-md-offset-3"> Nom de la ressource</label>
+            <input type="text" placeholder={{resource.name}} ng-model="name" id='name' class="col-md-3 col-md-offset-3"></input>
+          </div>
+          <div class="form-group">
+            <label for='link' class='control-label' class="col-md-3 col-md-offset-3"> Lien de la ressource</label>
+            <input type="text" placeholder={{resource.link}} ng-model="link" id='link' class="col-md-3 col-md-offset-3"></input>
+          </div>
+          <input class="btn btn-success" type="submit" style="margin-top: 20px;">
+        </form>
+
   </script>
 
   <script type="text/ng-template" id="/resource.html">
-    <a href="#/back/resources">
-      <button>Back</button>
-    </a>
-    <h1>Modify</h1>
-    <input class="resource-name" type="text" placeholder="{{resource.name}}" value="{{resource.name}}" ng-model="name">Nom de la ressource</input>
-    <input class="resource-link" type="text" placeholder="{{resource.link}}" value="{{resource.link}}" ng-model="link">Lien de la ressource</input>
-    <input type="submit" value="hi" ng-click="updateResource(resource)">
+    <div class='col-md-6 col-md-offset-3'>
+      <a class="btn btn-primary" href="#/back/resources" style='margin-top: 30px;'> Back </a>
+      <form ng-submit="updateResource(resource)" style="margin-top:30px;" class='form-horizontal'>
+        <div class="form-group col-md-7 col-md-offset-3">
+          <label class='control-label' for='name'>Nom de la Ressource</label>
+          <input class="resource-name" type="text" placeholder="{{resource.name}}" value="{{resource.name}}" ng-model="name" id='name'></input>
+        </div>
+        <div class="form-group col-md-7 col-md-offset-3">
+          <label class='control-label' for='link'>Lien de la Ressource</label>
+          <input class="resource-link" type="text" placeholder="{{resource.link}}" value="{{resource.link}}" ng-model="link" id='link'></input>
+        </div>
+        <div class="form-group col-md-7 col-md-offset-3">
+          <input class="btn btn-success" type="submit" style="margin-top: 20px;display:block;" id='sub' value="Modifier">
+        </div>
+      </form>
+    </div>
   </script>
 
   <!-- END RESOURCES -->
@@ -86,14 +105,15 @@
   <!-- COUNTRIES -->
 
   <script type="text/ng-template" id="/countries.html">
-    <a href="#/back">
-      <button>Back</button>
-    </a>
-    <div>
+    <div class="col-md-6 col-md-offset-3" style="margin-top:30px;margin-bottom: 20px;">
+      <a href="#/back">
+        <button>Back</button>
+      </a>
       <a href="#/back/create-country">
         <button>Créer</button>
       </a>
     </div>
+
     <div ng-repeat="country in countries.countries">
       <span>{{country.name}} id : {{country._id}}</span>
       <button ng-click="deleteCountry(country)">Delete</button>
@@ -225,10 +245,146 @@
     <span>Modify</span>
     <input class="family-name" type="text" placeholder="{{family.name}}" value="{{family.name}}" ng-model="name"></input>
     <input class="family-definition" type="text" placeholder="{{family.definition}}" value="{{family.definition}}" ng-model="definition"></input>
-    <input type="submit" value="hi" ng-click="updateFact(fact)">
+    <input type="submit" value="Valider" ng-click="updateFamily(family)">
   </script>
 
   <!-- END FAMILIES -->
+
+  <!-- DI -->
+
+<script type="text/ng-template" id="/dir-create.html">
+  <a href="#/back">
+    <button>Back</button>
+  </a>
+  <div>
+    <a href="#/back/">
+      <button>Créer</button>
+    </a>
+  </div>
+  <h3>Add DI</h3>
+  <form ng-submit="addDir()" style="margin-top:20px;">
+    <span>Name</span>
+    <input type="text" ng-model="name"></input>
+    <span>Coordinates</span>
+    <input type="textarea" ng-model="coordinates"></input>
+    <br>
+    <span>Population by year</span>
+    <fieldset>
+    <input type="number" class="population"></input>
+    <input type="number" class="year"></input>
+    </fieldset>
+    <input class="submit" type="submit">
+  </form>
+  <button ng-click="addYear()">Add a year</button>
+  <button type="button" ng-click="removeYear()"> Remove a year</button>
+</script>
+
+<script type="text/ng-template" id="/dirs.html">
+  <a href="#/back">
+    <button>Back</button>
+  </a>
+  <div>
+    <a href="#/back/dir-create">
+      <button>Créer</button>
+    </a>
+  </div>
+  <div ng-repeat="dir in dirs.dirs">
+    <span>{{dir.name}} id : {{dir._id}}</span>
+    <button ng-click="deleteDir(dir)">Delete</button>
+    <a href="#/dir/{{dir._id}}">
+      <button>modify</button>
+    </a>
+  </div>
+</script>
+
+<script type="text/ng-template" id="/dir.html">
+  <span>Modify</span>
+  <form action="">
+  <input class="dir-name" type="text" placeholder="{{dir.name}}" value="{{dir.name}}" ng-model="name"></input>
+  <input class="dir-coordinates" type="textarea" placeholder="{{dir.coordinates}}" value="{{dir.coordinates}}" ng-model="coordinates"></input>
+
+  <div ng-repeat="year in dir.population_by_year.year track by $index">
+      <fieldset>
+        <input class="population" type="text" placeholder="{{dir.population_by_year.population[$index]}}" value="{{dir.population_by_year.population[$index]}}"></input>
+        <input class="year" type="number" placeholder="{{dir.population_by_year.year[$index]}}" value="{{dir.population_by_year.year[$index]}}"></input>
+      </fieldset>
+      </div>
+  <input type="submit" class="submit" ng-click="updateDir(dir)">
+  </form>
+  <button ng-click="addYear()">Add a year</button>
+  <button type="button" ng-click="removeYear()"> Remove a year</button>
+</script>
+
+<!-- END DI  -->
+
+<!--  Prisons-->
+<script type="text/ng-template" id="/prison-create.html">
+  <a href="#/back">
+    <button>Back</button>
+  </a>
+  <div>
+    <a href="#/back/">
+      <button>Créer</button>
+    </a>
+  </div>
+  <h3>Add Prison</h3>
+  <form ng-submit="addPrison()" style="margin-top:20px;">
+    <span>Name</span>
+    <input type="text" ng-model="name"></input>
+    <span>Coordinates</span>
+    <input type="string" ng-model="adress"></input>
+    <br>
+    <span>DI</span>
+    <fieldset>
+    <select name="dir" ng-model="dir" ng-options="dir.name for dir in dirs.dirs track by dir._id" value="{{dir._id}}"></select>
+    </fieldset>
+    <span>Population</span>
+    <fieldset>
+    <input type="number" ng-model="population"></input>
+    </fieldset>
+    <span>Density</span>
+    <fieldset>
+    <input type="number" ng-model="density"></input>
+    </fieldset>
+    <span>Family</span>
+    <fieldset>
+    <select name="family" ng-model="family" ng-options="family.name for family in families.families track by family._id" value="{{family._id}}"></select>
+    </fieldset>
+    <input class="submit" type="submit">
+  </form>
+</script>
+
+<script type="text/ng-template" id="/prisons.html">
+  <a href="#/back">
+    <button>Back</button>
+  </a>
+  <div>
+    <a href="#/back/prison-create">
+      <button>Créer</button>
+    </a>
+  </div>
+  <div ng-repeat="prison in prisons.prisons">
+    <span>{{prison.name}} id : {{prison._id}}</span>
+    <button ng-click="deletePrison(prison)">Delete</button>
+    <a href="#/prison/{{prison._id}}">
+      <button>modify</button>
+    </a>
+  </div>
+</script>
+
+<script type="text/ng-template" id="/prison.html">
+  <span>Modify</span>
+  <form action="">
+    <input class="prison-name" type="text" placeholder="{{prison.name}}" value="{{prison.name}}" ng-model="name"></input>
+    <input class="prison-adress" type="text" placeholder="{{prison.adress}}" value="{{prison.adress}}" ng-model="adress"></input>
+    <select class="prison-dir" name="dir" ng-model="dir" ng-options="dir.name for dir in dirs.dirs track by dir._id" value="{{prison.dir}}"></select>
+    <input class="prison-population" type="textarea" placeholder="{{prison.population}}" value="{{prison.population}}" ng-model="population"></input>
+    <input class="prison-density" type="number" placeholder="{{prison.density}}" value="{{prison.density}}" ng-model="density"></input>
+    <select class="prison-family" name="family" ng-model="family" ng-options="family.name for family in families.families track by family._id" value="{{prison.family}}"></select>
+    <input type="submit" class="submit" ng-click="updatePrison(prison)">
+  </form>
+</script>
+<!-- End Prisons -->
 </body>
 
 </html>

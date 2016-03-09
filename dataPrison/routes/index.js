@@ -265,9 +265,12 @@ router.get('/families', function(req, res, next) {
   });
 });
 
+
 router.get('/families/:family', function(req,res){
-    console.log(req.family);
-    res.json(req.family);
+  req.family.populate('prisons', function(err, family) {
+      if(err){ return next(err); }
+          res.json(req.family);
+    });
 });
 
 router.post('/families', function(req, res, next) {
@@ -314,6 +317,167 @@ router.param('family', function(req, res, next, id) {
     if (!family) { return next(new Error("can't find the resource")); }
 
     req.family = family;
+    return next();
+  });
+});
+
+router.put('/families/:family/prisons/', function(req, res){
+  Family.findByIdAndUpdate(
+        req.body.id,
+        {$push: {'prisons': req.body.prison}},
+        {safe: true, upsert: true, new : true},
+        function(err, model) {
+            console.log(err);
+        }
+    );
+});
+
+// Directions
+
+router.get('/dirs', function(req, res, next) {
+  DI.find(function(err, dirs){
+    if(err){ return next(err); }
+
+    res.json(dirs);
+  });
+});
+
+router.get('/dirs/:dir', function(req,res){
+  req.dir.populate('prisons', function(err, post) {
+      if(err){ return next(err); }
+          res.json(req.dir);
+    });
+});
+
+router.post('/dirs', function(req, res, next) {
+  var dir = new DI(req.body);
+  dir.save(function(err, dir){
+    if(err){ return next(err); }
+
+    res.json(dir);
+  });
+});
+
+router.delete('/dirs/:dir', function(req,res){
+    DI.remove({
+      _id: req.params.dir
+    },
+    function (err, user) {
+            if (err) return res.send(err);
+            res.json({ message: 'Deleted' });
+        });
+});
+
+router.put('/dirs/:dir', function(req, res){
+  DI.update({ _id: req.body.id},{
+    $set: {
+      name: req.body.name,
+      coordinates: req.body.coordinates,
+      population_by_year: {
+        year: req.body.population_by_year.year,
+        population: req.body.population_by_year.population,
+      },
+}
+},
+function(err) {
+  if (err) return res.send(err);
+  res.json({
+    message: 'updated'
+  });
+});
+});
+
+router.param('dir', function(req, res, next, id) {
+  var query = DI.findById(id);
+
+  query.exec(function (err, dir){
+    if (err) { return next(err); }
+    if (!dir) { return next(new Error("can't find the DI")); }
+
+    req.dir = dir;
+    return next();
+  });
+});
+
+router.put('/dirs/:dir/prisons/', function(req, res){
+  DI.findByIdAndUpdate(
+        req.body.id,
+        {$push: {'prisons': req.body.prison}},
+        {safe: true, upsert: true, new : true},
+        function(err, model) {
+            console.log(err);
+        }
+    );
+});
+
+// Prisons
+
+router.get('/prisons', function(req, res, next) {
+  Prison.find(function(err, prisons){
+    if(err){ return next(err); }
+    res.json(prisons);
+  });
+});
+
+router.get('/prisons/:prison', function(req,res){
+  var opts = [
+    {path: 'family', model:'Family'},
+    {path: 'interregional_direction', model:'DI'}
+  ];
+    req.prison.populate(opts, function(err, prison){
+      if(err){ return next(err); }
+          res.json(req.prison);
+    });
+});
+
+router.post('/prisons', function(req, res, next) {
+  var prison = new Prison(req.body);
+  prison.save(function(err, dir){
+    if(err){ return next(err); }
+
+    res.json(prison);
+  });
+});
+
+router.delete('/prisons/:prison', function(req,res){
+    Prison.remove({
+      _id: req.params.prison
+    },
+    function (err, user) {
+            if (err) return res.send(err);
+            res.json({ message: 'Deleted' });
+        });
+});
+
+
+router.put('/prisons/:prison', function(req, res){
+  console.log(req.body.interregional_direction);
+  Prison.update({ _id: req.body.id},{
+    $set: {
+      name: req.body.name,
+      coordinates: {x: req.body.coordinates.x , y: req.body.coordinates.y},
+      interregional_direction: req.body.interregional_direction,
+      population: req.body.population,
+      density: req.body.density,
+      family: req.body.family,
+}
+},
+function(err) {
+  if (err) return res.send(err);
+  res.json({
+    message: 'updated'
+  });
+});
+});
+
+router.param('prison', function(req, res, next, id) {
+  var query = Prison.findById(id);
+
+  query.exec(function (err, prison){
+    if (err) { return next(err); }
+    if (!prison) { return next(new Error("can't find the Prison")); }
+
+    req.prison = prison;
     return next();
   });
 });
