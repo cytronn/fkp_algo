@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var passport = require('passport');
 
 mongoose.connect('mongodb://dataprisonsadmin:hbzx781vFLhvVr@51.254.98.52:27017/dataprisons');
 require('./models/Countries');
@@ -14,6 +15,8 @@ require('./models/Facts');
 require('./models/Prisons');
 require('./models/Resources');
 require('./models/Families');
+require('./models/User');
+require('./config/passport');
 
 var routes = require('./routes/index');
 
@@ -34,6 +37,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With,content-type,Authorization");
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 app.use('/', routes);
 

@@ -1,12 +1,16 @@
-var mongoose = require('mongoose');
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
+var mongoose = require('mongoose');
 var Prison = mongoose.model('Prison');
 var DI = mongoose.model('DI');
 var Family = mongoose.model('Family');
 var Fact = mongoose.model('Fact');
 var Resource = mongoose.model('Resource');
 var Country = mongoose.model('Country');
+var User = mongoose.model('User');
+var jwt = require('express-jwt');
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -17,6 +21,43 @@ router.get('/back-resources-modify', function(req, res, next) {
   res.render('back_resources');
 });
 
+/* REGISTER */
+
+router.post('/register', function(req, res, next) {
+  if(!req.body.username || !req.body.password) {
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+
+  var user = new User();
+
+  user.username = req.body.username;
+
+  user.setPassword(req.body.password);
+  user.save(function (err) {
+    if(err){ return next(err); }
+
+    return res.json({token: user.generateJWT()});
+  });
+});
+
+/* LOGIN */
+
+
+router.post('/login', function(req, res, next) {
+  if(!req.body.username || !req.body.password) {
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+
+  passport.authenticate('local', function(err, user, info) {
+    if(err) { return next(err); }
+
+    if(user) {
+      return res.json({token: user.generateJWT()});
+    } else {
+      return res.status(401).json(info);
+    }
+  })(req, res, next);
+});
 
 /*
   RESOURCES
@@ -25,7 +66,6 @@ router.get('/back-resources-modify', function(req, res, next) {
 router.get('/resources', function(req, res, next) {
   Resource.find(function(err, resources){
     if(err){ return next(err); }
-
     res.json(resources);
   });
 });

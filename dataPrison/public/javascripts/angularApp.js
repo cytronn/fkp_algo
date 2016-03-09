@@ -378,7 +378,7 @@ app.factory('resources', ['$http', function($http) {
         angular.copy(data, o.resources);
         console.log(o);
       });
-    };
+  };
 
   o.update = function(resource, data) {
     var url = '/resources/' + resource._id;
@@ -484,8 +484,6 @@ app.factory('families', ['$http', function($http) {
         location.reload();
       });
   };
-
-
 
   return o;
 }]);
