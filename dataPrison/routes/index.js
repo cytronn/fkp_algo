@@ -455,6 +455,7 @@ router.put('/prisons/:prison', function(req, res){
   Prison.update({ _id: req.body.id},{
     $set: {
       name: req.body.name,
+      adress: req.body.adress,
       coordinates: {x: req.body.coordinates.x , y: req.body.coordinates.y},
       interregional_direction: req.body.interregional_direction,
       population: req.body.population,
