@@ -233,6 +233,7 @@ app.controller('MainCtrl', [
     $scope.dirs = dirs;
     $scope.years = [];
     $scope.populations = [];
+    $scope.densities = [];
     $scope.prisons = prisons;
 
     // RESOURCES
@@ -280,26 +281,34 @@ app.controller('MainCtrl', [
     $scope.addDir = function() {
       var years = document.querySelectorAll('fieldset .year');
       var populations = document.querySelectorAll('fieldset .population');
+      var densities = document.querySelectorAll('fieldset .density');
+      console.log(densities);
       console.log(populations);
       for (var i = 0; i < years.length; i++) {
         $scope.years[i] = years[i].value;
         $scope.populations[i] = populations[i].value;
+        $scope.densities[i] = densities[i].value;
       }
       console.log($scope.populations);
       console.log($scope.years);
+      console.log($scope.densities);
       var sorted_years = $scope.years.slice(0).sort();
       var sorted_pop = [];
+      var sorted_density = [];
       for(var i = 0; i < $scope.populations.length; i++ ){
         sorted_pop[i] = $scope.populations[$scope.years.indexOf(sorted_years[i])];
+        sorted_density[i] = $scope.densities[$scope.years.indexOf(sorted_years[i])];
       }
       console.log(sorted_years);
       console.log(sorted_pop);
+      console.log(sorted_density);
       dirs.create({
         name: $scope.name,
         coordinates: $scope.coordinates,
         population_by_year: {
           year: sorted_years,
           population: sorted_pop,
+          density: sorted_density,
         },
         prisons: [],
       });
@@ -312,7 +321,7 @@ app.controller('MainCtrl', [
     $scope.addYear = function() {
       var button = document.querySelector('.submit');
       var fieldToAdd = document.createElement('fieldset');
-      fieldToAdd.innerHTML = '<input type="number" class="population"></input><input type="number" class="year"></input>';
+      fieldToAdd.innerHTML = '<input type="number" class="population"></input><input type="number" class="year"></input> </input><input type="number" class="density"></input>';
       document.querySelector('form').insertBefore(fieldToAdd, button);
     };
 
@@ -451,17 +460,27 @@ app.controller('dirCtrl', [
     $scope.updateDir = function(dir) {
       var years = document.querySelectorAll('fieldset .year');
       var populations = document.querySelectorAll('fieldset .population');
+      var densities = document.querySelectorAll('fieldset .density');
+      console.log(densities);
       console.log(populations);
       for (var i = 0; i < years.length; i++) {
         $scope.years[i] = years[i].value;
         $scope.populations[i] = populations[i].value;
+        $scope.densities[i] = densities[i].value;
       }
-
+      console.log($scope.populations);
+      console.log($scope.years);
+      console.log($scope.densities);
       var sorted_years = $scope.years.slice(0).sort();
       var sorted_pop = [];
+      var sorted_density = [];
       for(var i = 0; i < $scope.populations.length; i++ ){
         sorted_pop[i] = $scope.populations[$scope.years.indexOf(sorted_years[i])];
+        sorted_density[i] = $scope.densities[$scope.years.indexOf(sorted_years[i])];
       }
+      console.log(sorted_years);
+      console.log(sorted_pop);
+      console.log(sorted_density);
 
       dirs.update(dir, {
         id: dir._id,
@@ -470,6 +489,7 @@ app.controller('dirCtrl', [
         population_by_year: {
           year: sorted_years,
           population: sorted_pop,
+          density: sorted_density,
         },
       });
     };

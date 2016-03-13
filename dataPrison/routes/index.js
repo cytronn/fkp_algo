@@ -376,6 +376,7 @@ router.put('/dirs/:dir', function(req, res){
       population_by_year: {
         year: req.body.population_by_year.year,
         population: req.body.population_by_year.population,
+        density: req.body.population_by_year.density,
       },
 }
 },

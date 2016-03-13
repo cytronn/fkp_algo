@@ -272,6 +272,7 @@
     <fieldset>
     <input type="number" class="population"></input>
     <input type="number" class="year"></input>
+    <input type="number" class="density"></input>
     </fieldset>
     <input class="submit" type="submit">
   </form>
@@ -307,6 +308,7 @@
       <fieldset>
         <input class="population" type="text" placeholder="{{dir.population_by_year.population[$index]}}" value="{{dir.population_by_year.population[$index]}}"></input>
         <input class="year" type="number" placeholder="{{dir.population_by_year.year[$index]}}" value="{{dir.population_by_year.year[$index]}}"></input>
+        <input class="density" type="number" placeholder="{{dir.population_by_year.density[$index]}}" value="{{dir.population_by_year.density[$index]}}"></input>
       </fieldset>
       </div>
   <input type="submit" class="submit" ng-click="updateDir(dir)">
