@@ -765,10 +765,11 @@ app.factory('dirs', ['$http', function($http) {
   };
 
   o.update = function(dir, data) {
+    console.log(dir);
     var url = '/dirs/' + dir._id;
     return $http.put(url, data)
       .success(function() {
-        location.reload();
+        // location.reload();
       });
   };
 
