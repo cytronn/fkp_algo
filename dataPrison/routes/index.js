@@ -63,6 +63,7 @@ router.post('/login', function(req, res, next) {
   RESOURCES
 */
 
+// get all resources
 router.get('/resources', function(req, res, next) {
   Resource.find(function(err, resources){
     if(err){ return next(err); }
@@ -70,6 +71,7 @@ router.get('/resources', function(req, res, next) {
   });
 });
 
+// create new resource
 router.post('/resources', function(req, res, next) {
   var resource = new Resource(req.body);
 
@@ -80,12 +82,13 @@ router.post('/resources', function(req, res, next) {
   });
 });
 
+// get one resource
 router.get('/resources/:resource', function(req,res){
     res.json(req.resource);
 });
 
+// delete a resource
 router.delete('/resources/:resource', function(req,res){
-    console.log(req.params.resource);
     Resource.remove({
       _id: req.params.resource
     },
@@ -95,8 +98,8 @@ router.delete('/resources/:resource', function(req,res){
         });
 });
 
+// update a resource
 router.put('/resources/:resource', function(req, res){
-  console.log(req.body.name);
   Resource.update({ _id: req.body.id},{
     $set: {
       name: req.body.name,
@@ -127,6 +130,7 @@ router.param('resource', function(req, res, next, id) {
 COUNTRIES
 */
 
+// get countries
 router.get('/countries', function(req, res, next) {
   Country.find(function(err, countries){
     if(err){ return next(err); }
@@ -135,6 +139,7 @@ router.get('/countries', function(req, res, next) {
   });
 });
 
+// post a new country
 router.post('/countries', function(req, res, next) {
   var country = new Country(req.body);
 
@@ -157,11 +162,13 @@ router.param('country', function(req, res, next, id) {
   });
 });
 
+// get one coutry
 router.get('/countries/:country', function(req,res){
     res.json(req.country);
 });
 
 
+// delete one country
 router.delete('/countries/:country', function(req,res){
     Country.remove({
       _id: req.params.country
@@ -172,8 +179,8 @@ router.delete('/countries/:country', function(req,res){
         });
 });
 
+// update a country
 router.put('/countries/:country', function(req, res){
-  console.log(req.body.name);
   Country.update({ _id: req.body.id},{
     $set: {
      code: req.body.code,
@@ -193,6 +200,7 @@ function(err) {
 
 /* FACTS */
 
+// get all facts
 router.get('/facts', function(req, res, next) {
   Fact.find(function(err, facts){
     if(err){ return next(err); }
@@ -201,11 +209,12 @@ router.get('/facts', function(req, res, next) {
   });
 });
 
+// get one fact
 router.get('/facts/:fact', function(req,res){
-    console.log(req.fact);
     res.json(req.fact);
 });
 
+// post a new fact
 router.post('/facts', function(req, res, next) {
   var fact = new Fact(req.body);
 
@@ -216,8 +225,8 @@ router.post('/facts', function(req, res, next) {
   });
 });
 
+// delete one fact
 router.delete('/facts/:fact', function(req,res){
-    console.log(req.params.fact);
     Fact.remove({
       _id: req.params.fact
     },
@@ -227,6 +236,7 @@ router.delete('/facts/:fact', function(req,res){
         });
 });
 
+// update one fact
 router.put('/facts/:fact', function(req, res){
   Fact.update({ _id: req.body.id},{
     $set: {
@@ -257,6 +267,7 @@ router.param('fact', function(req, res, next, id) {
 
 /* Families */
 
+// get all families
 router.get('/families', function(req, res, next) {
   Family.find(function(err, families){
     if(err){ return next(err); }
@@ -265,7 +276,7 @@ router.get('/families', function(req, res, next) {
   });
 });
 
-
+// get one family
 router.get('/families/:family', function(req,res){
   req.family.populate('prisons', function(err, family) {
       if(err){ return next(err); }
@@ -273,6 +284,7 @@ router.get('/families/:family', function(req,res){
     });
 });
 
+// create a new family
 router.post('/families', function(req, res, next) {
   var family = new Family(req.body);
 
@@ -283,8 +295,8 @@ router.post('/families', function(req, res, next) {
   });
 });
 
+// delete one family
 router.delete('/families/:family', function(req,res){
-    console.log(req.params.family);
     Family.remove({
       _id: req.params.family
     },
@@ -294,6 +306,7 @@ router.delete('/families/:family', function(req,res){
         });
 });
 
+// update one family
 router.put('/families/:family', function(req, res){
   Family.update({ _id: req.body.id},{
     $set: {
@@ -321,6 +334,7 @@ router.param('family', function(req, res, next, id) {
   });
 });
 
+// add prisons to family
 router.put('/families/:family/prisons/', function(req, res){
   Family.findByIdAndUpdate(
         req.body.id,
@@ -334,6 +348,7 @@ router.put('/families/:family/prisons/', function(req, res){
 
 // Directions
 
+// get all interregional directions
 router.get('/dirs', function(req, res, next) {
   DI.find(function(err, dirs){
     if(err){ return next(err); }
@@ -342,6 +357,7 @@ router.get('/dirs', function(req, res, next) {
   });
 });
 
+// get one interregional direction
 router.get('/dirs/:dir', function(req,res){
   req.dir.populate('prisons', function(err, post) {
       if(err){ return next(err); }
@@ -349,6 +365,7 @@ router.get('/dirs/:dir', function(req,res){
     });
 });
 
+// create a new interregional direction
 router.post('/dirs', function(req, res, next) {
   var dir = new DI(req.body);
   dir.save(function(err, dir){
@@ -358,6 +375,7 @@ router.post('/dirs', function(req, res, next) {
   });
 });
 
+// delete one interregional direction
 router.delete('/dirs/:dir', function(req,res){
     DI.remove({
       _id: req.params.dir
@@ -368,6 +386,7 @@ router.delete('/dirs/:dir', function(req,res){
         });
 });
 
+// update one interregional direction
 router.put('/dirs/:dir', function(req, res){
   DI.update({ _id: req.body.id},{
     $set: {
@@ -400,6 +419,7 @@ router.param('dir', function(req, res, next, id) {
   });
 });
 
+// update prisons in interregional directions
 router.put('/dirs/:dir/prisons/', function(req, res){
   DI.findByIdAndUpdate(
         req.body.id,
@@ -413,6 +433,7 @@ router.put('/dirs/:dir/prisons/', function(req, res){
 
 // Prisons
 
+// get all prisons
 router.get('/prisons', function(req, res, next) {
   Prison.find(function(err, prisons){
     if(err){ return next(err); }
@@ -420,6 +441,7 @@ router.get('/prisons', function(req, res, next) {
   });
 });
 
+// get one prison
 router.get('/prisons/:prison', function(req,res){
   var opts = [
     {path: 'family', model:'Family'},
@@ -431,6 +453,7 @@ router.get('/prisons/:prison', function(req,res){
     });
 });
 
+// create new prison
 router.post('/prisons', function(req, res, next) {
   var prison = new Prison(req.body);
   prison.save(function(err, dir){
@@ -440,6 +463,7 @@ router.post('/prisons', function(req, res, next) {
   });
 });
 
+// delete one prison
 router.delete('/prisons/:prison', function(req,res){
     Prison.remove({
       _id: req.params.prison
@@ -450,9 +474,8 @@ router.delete('/prisons/:prison', function(req,res){
         });
 });
 
-
+// update a prison
 router.put('/prisons/:prison', function(req, res){
-  console.log(req.body.interregional_direction);
   Prison.update({ _id: req.body.id},{
     $set: {
       name: req.body.name,

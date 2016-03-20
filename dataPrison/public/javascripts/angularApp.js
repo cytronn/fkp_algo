@@ -14,6 +14,8 @@ app.config([
       })
 
     // RESOURCES
+
+    // create a resource
     .state('addResource', {
       url: '/back/create-resource',
       templateUrl: '/resource-create.html',
@@ -21,6 +23,7 @@ app.config([
       resolve: {},
     })
 
+    // get all resources
     .state('resources', {
       url: '/back/resources',
       templateUrl: '/resources.html',
@@ -32,6 +35,7 @@ app.config([
       },
     })
 
+    // update a resource
     .state('updateResource', {
       url: '/back/resources/:id',
       templateUrl: '/resource.html',
@@ -44,7 +48,7 @@ app.config([
     })
 
     // COUNTRIES
-
+    // get all countries
     .state('countries', {
       url: '/back/countries',
       templateUrl: '/countries.html',
@@ -55,7 +59,7 @@ app.config([
         }]
       },
     })
-
+    // create a country
     .state('addCountry', {
       url: '/back/create-country',
       templateUrl: '/country-create.html',
@@ -63,13 +67,13 @@ app.config([
       resolve: {},
     })
 
+    // update a country
     .state('updateCountry', {
       url: '/back/countries/:id',
       templateUrl: '/country.html',
       controller: 'countryCtrl',
       resolve: {
         country: ['$stateParams', 'countries', function($stateParams, countries) {
-          console.log(countries.get($stateParams.id));
           return countries.get($stateParams.id);
         }]
       },
@@ -77,6 +81,7 @@ app.config([
 
     // FACTS
 
+    // get all facts
     .state('facts', {
       url: '/back/facts',
       templateUrl: '/facts.html',
@@ -88,6 +93,7 @@ app.config([
       },
     })
 
+    // create a fact
     .state('addFact', {
       url: '/back/fact-create',
       templateUrl: '/fact-create.html',
@@ -95,6 +101,7 @@ app.config([
       resolve: {},
     })
 
+    // update a fact
     .state('updateFact', {
       url: '/facts/:id',
       templateUrl: '/fact.html',
@@ -109,6 +116,7 @@ app.config([
 
     // FAMILIES
 
+    // get all families
     .state('families', {
       url: '/back/families',
       templateUrl: '/families.html',
@@ -120,6 +128,7 @@ app.config([
       },
     })
 
+    // create a family
     .state('addFamily', {
       url: '/back/family-create',
       templateUrl: '/family-create.html',
@@ -127,6 +136,7 @@ app.config([
       resolve: {},
     })
 
+    // update a family
     .state('updateFamily', {
       url: '/families/:id',
       templateUrl: '/family.html',
@@ -140,6 +150,7 @@ app.config([
 
     // Directions
 
+    // get all interregional directions
     .state('dirs', {
       url: '/back/dirs',
       templateUrl: '/dirs.html',
@@ -151,6 +162,7 @@ app.config([
       },
     })
 
+    // create a new interregional direction
     .state('addDir', {
       url: '/back/dir-create',
       templateUrl: '/dir-create.html',
@@ -158,6 +170,7 @@ app.config([
       resolve: {},
     })
 
+    // update an interregional direction
     .state('updateDir', {
       url: '/dir/:id',
       templateUrl: '/dir.html',
@@ -171,6 +184,7 @@ app.config([
 
     // Prisons
 
+    // get all prisons
     .state('prisons', {
       url: '/back/prisons',
       templateUrl: '/prisons.html',
@@ -182,6 +196,7 @@ app.config([
       },
     })
 
+    // create a new prison
     .state('addPrison', {
       url: '/back/prison-create',
       templateUrl: '/prison-create.html',
@@ -196,6 +211,7 @@ app.config([
       },
     })
 
+    // update a prison
     .state('updatePrison', {
       url: '/prison/:id',
       templateUrl: '/prison.html',
@@ -218,6 +234,7 @@ app.config([
   }
 ]);
 
+// Main controller
 app.controller('MainCtrl', [
   '$scope',
   'resources',
@@ -276,22 +293,17 @@ app.controller('MainCtrl', [
       });
     };
 
-    // dirs
+    // Interregional directons
 
     $scope.addDir = function() {
       var years = document.querySelectorAll('fieldset .year');
       var populations = document.querySelectorAll('fieldset .population');
       var densities = document.querySelectorAll('fieldset .density');
-      console.log(densities);
-      console.log(populations);
       for (var i = 0; i < years.length; i++) {
         $scope.years[i] = years[i].value;
         $scope.populations[i] = populations[i].value;
         $scope.densities[i] = densities[i].value;
       }
-      console.log($scope.populations);
-      console.log($scope.years);
-      console.log($scope.densities);
       var sorted_years = $scope.years.slice(0).sort();
       var sorted_pop = [];
       var sorted_density = [];
@@ -299,9 +311,7 @@ app.controller('MainCtrl', [
         sorted_pop[i] = $scope.populations[$scope.years.indexOf(sorted_years[i])];
         sorted_density[i] = $scope.densities[$scope.years.indexOf(sorted_years[i])];
       }
-      console.log(sorted_years);
-      console.log(sorted_pop);
-      console.log(sorted_density);
+      // new interregional direction
       dirs.create({
         name: $scope.name,
         coordinates: $scope.coordinates,
@@ -356,6 +366,7 @@ app.controller('MainCtrl', [
 
 ]);
 
+// Resource controller
 app.controller('resourceCtrl', [
   '$scope',
   'resource',
@@ -373,6 +384,7 @@ app.controller('resourceCtrl', [
   }
 ]);
 
+// Countries controller
 app.controller('countriesCtrl', [
   '$scope',
   'countries',
@@ -394,6 +406,7 @@ app.controller('countriesCtrl', [
   }
 ]);
 
+// Countries controller
 app.controller('countryCtrl', [
   '$scope',
   'country',
@@ -402,7 +415,6 @@ app.controller('countryCtrl', [
   function($scope, country, countries, $stateParams) {
     $scope.country = country;
     $scope.updateCountry = function(country) {
-      console.log($scope.name);
       countries.update(country, {
         id: country._id,
         code: !$scope.code ? document.querySelector('.country-code').getAttribute('value') : $scope.code,
@@ -413,6 +425,7 @@ app.controller('countryCtrl', [
   }
 ]);
 
+// Facts controller
 app.controller('factCtrl', [
   '$scope',
   'fact',
@@ -421,7 +434,6 @@ app.controller('factCtrl', [
   function($scope, fact, facts, $stateParams) {
     $scope.fact = fact;
     $scope.updateFact = function(fact) {
-      console.log(document.querySelector('.fact-name').getAttribute('value'));
       facts.update(fact, {
         id: fact._id,
         name: !$scope.name ? document.querySelector('.fact-name').getAttribute('value') : $scope.name,
@@ -432,6 +444,7 @@ app.controller('factCtrl', [
   }
 ]);
 
+// Families controller
 app.controller('familyCtrl', [
   '$scope',
   'family',
@@ -449,6 +462,7 @@ app.controller('familyCtrl', [
   }
 ]);
 
+// Interregional direction controller
 app.controller('dirCtrl', [
   '$scope',
   'dir',
@@ -461,16 +475,11 @@ app.controller('dirCtrl', [
       var years = document.querySelectorAll('fieldset .year');
       var populations = document.querySelectorAll('fieldset .population');
       var densities = document.querySelectorAll('fieldset .density');
-      console.log(densities);
-      console.log(populations);
       for (var i = 0; i < years.length; i++) {
         $scope.years[i] = years[i].value;
         $scope.populations[i] = populations[i].value;
         $scope.densities[i] = densities[i].value;
       }
-      console.log($scope.populations);
-      console.log($scope.years);
-      console.log($scope.densities);
       var sorted_years = $scope.years.slice(0).sort();
       var sorted_pop = [];
       var sorted_density = [];
@@ -478,9 +487,6 @@ app.controller('dirCtrl', [
         sorted_pop[i] = $scope.populations[$scope.years.indexOf(sorted_years[i])];
         sorted_density[i] = $scope.densities[$scope.years.indexOf(sorted_years[i])];
       }
-      console.log(sorted_years);
-      console.log(sorted_pop);
-      console.log(sorted_density);
 
       dirs.update(dir, {
         id: dir._id,
@@ -496,6 +502,7 @@ app.controller('dirCtrl', [
   }
 ]);
 
+// Prisons controller
 app.controller('prisonCtrl', [
   '$scope',
   'prison',
@@ -511,8 +518,6 @@ app.controller('prisonCtrl', [
     $scope.updatePrison = function(prison) {
       return $http.get("https://maps.googleapis.com/maps/api/geocode/json?address="+$scope.adress.replace(/\s+/g,"+")+"&key=AIzaSyCcQmrmCLvl8nFkOZWIwmj6SVrylAzvTm0")
       .success(function(data) {
-        console.log('hello');
-        console.log($scope.adress);
         prisons.update(prison,{
           id : prison._id,
           name: !$scope.name ? document.querySelector('.prison-name').getAttribute('value') : $scope.name,
@@ -531,6 +536,8 @@ app.controller('prisonCtrl', [
   }
 ]);
 
+
+// Factories : define methods to create, delete, get, get all and update data
 
 app.factory('facts', ['$http', function($http) {
   var o = {
@@ -557,7 +564,6 @@ app.factory('facts', ['$http', function($http) {
   o.get = function(id) {
     return $http.get('/facts/' + id)
       .then(function(res) {
-        console.log(res.data);
         return res.data;
       });
   };
@@ -566,12 +572,10 @@ app.factory('facts', ['$http', function($http) {
     return $http.get('/facts')
       .success(function(data) {
         angular.copy(data, o.facts);
-        console.log(o);
       });
   };
 
   o.update = function(fact, data)  {
-    console.log(data.id);
     var url = '/facts/' + fact._id;
     return $http.put(url, data)
       .success(function() {
@@ -607,7 +611,6 @@ app.factory('resources', ['$http', function($http) {
   o.get = function(id) {
     return $http.get('/resources/' + id)
       .then(function(res) {
-        console.log(res.data);
         return res.data;
       });
   };
@@ -616,7 +619,6 @@ app.factory('resources', ['$http', function($http) {
     return $http.get('/resources')
       .success(function(data) {
         angular.copy(data, o.resources);
-        console.log(o);
       });
   };
 
@@ -664,12 +666,10 @@ app.factory('countries', ['$http', function($http) {
     return $http.get('/countries')
       .success(function(data) {
         angular.copy(data, o.countries);
-        console.log(o);
       });
   };
 
   o.update = function(country, data)  {
-    console.log(country);
     var url = '/countries/' + country._id;
     return $http.put(url, data)
       .success(function() {
@@ -744,7 +744,6 @@ app.factory('dirs', ['$http', function($http) {
     var url = '/dirs/' + dir._id;
     return $http.delete(url)
       .success(function() {
-        console.log('this');
         o.dirs.splice(dir);
         location.reload();
       });
@@ -765,7 +764,6 @@ app.factory('dirs', ['$http', function($http) {
   };
 
   o.update = function(dir, data) {
-    console.log(dir);
     var url = '/dirs/' + dir._id;
     return $http.put(url, data)
       .success(function() {
@@ -826,7 +824,6 @@ app.factory('prisons', ['$http', function($http) {
   };
 
   o.update = function(prison, data) {
-    console.log(data);
     var url = '/prisons/' + prison._id;
     return $http.put(url, data)
       .success(function() {
